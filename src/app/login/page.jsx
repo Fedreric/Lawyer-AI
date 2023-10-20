@@ -7,12 +7,12 @@ const Login = () => {
     <>
       <div className=" h-screen flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color">
         <header className="fixed top-0 left-0 right-0 bg-gray-700 text-text-custom-color-white p-2">
-          <h2 className="text-lg leading-8 tracking-tight">LAWYER.AI</h2>
+          <h2 className="text-2xl leading-8 tracking-tight">Lawyer.<span className="text-text-custom-color-Details">AI</span></h2>
         </header>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <picture>
-            <Image src={logo} alt="Logo" height={"150"} className="mx-auto" />
+            <Image src={logo} alt="Logo" height={"150"} className="mx-auto animate-spin" />
           </picture>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-text-custom-color-dark">
             Nice to see you!
@@ -77,7 +77,7 @@ const Login = () => {
             Not a member?{" "}
             <Link
               href="/register"
-              className="font-semibold leading-6 underline text-text-custom-color-white hover:text-gray-500"
+              className="font-semibold leading-6 underline text-blue-700 hover:text-blue-500"
             >
               Register
             </Link>
