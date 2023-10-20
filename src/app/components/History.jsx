@@ -3,7 +3,7 @@ import ResumeItem from "./ResumeItem";
 export default function History() {
   return (
     <>
-      <div className='text-text-custom-color-white mt-20 mb-4 md:mt-32'>
+      <div className='text-text-custom-color-white mt-24 mb-4 md:mt-32'>
         <h2 className='text-3xl'>
           Hi <span className='text-text-custom-color-Details'>Lawyer!</span>
         </h2>
