@@ -15,7 +15,7 @@ module.exports = {
       colors:{
         'bg-custom-color':'#dcbc88',
         'text-custom-color-white':'#fafafa',
-        'text-custom-color-dark':'#05000A',
+        'custom-color-dark':'#05000A',
         'text-custom-color-Details':'#F5A524'
       },      
       keyframes: {
@@ -30,5 +30,5 @@ module.exports = {
       },      
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
