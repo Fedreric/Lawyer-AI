@@ -4,9 +4,9 @@ const Navbar = () => {
   return (
     <div className='navbar bg-custom-color-dark text-text-custom-color-white'>
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl text-yellow-500 '>
-          Lawyer-AI
-        </a>
+        <a className='btn btn-ghost normal-case text-xl text-text-custom-color-white '>
+          Lawyer<spam className=' text-bg-custom-color'>-AI</spam> 
+       </a>
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal'>
