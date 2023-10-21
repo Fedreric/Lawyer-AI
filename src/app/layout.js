@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import History from "./components/History";
+import Publicity from "./components/Publicity";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +16,15 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <Navbar></Navbar>
-        <section className='md:flex'>
-          <div className='md:order-2 w-full'>{children}</div>
-          <section className='h-screen md:w-[35%] flex flex-col bg-custom-color-dark pl-8 pr-4'>
-          <History />
-          </section>
+        {/* Si el usuario esta logueado */}
+        {/* <section className='flex flex-col md:flex-row'>
+            <History />
+          <div className='w-full md:order-2'>{children}</div>
+        </section> */}
+        {/* Si el usuario NO esta logueado */}
+        <section className='flex flex-col md:flex-row'>
+            <Publicity />
+          <div className='w-full' id="main">{children}</div>
         </section>
       </body>
     </html>
