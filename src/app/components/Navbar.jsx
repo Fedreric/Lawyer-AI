@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className='navbar bg-custom-color-dark text-text-custom-color-white'>
+    <div className='navbar bg-custom-color-dark text-text-custom-color-white fixed'>
       <div className='flex-1'>
         <a className='btn btn-ghost normal-case text-xl text-yellow-500 '>
           Lawyer-AI
