@@ -5,7 +5,7 @@ const Navbar = () => {
     <div className='navbar bg-custom-color-dark text-text-custom-color-white fixed'>
       <div className='flex-1'>
         <a className='btn btn-ghost normal-case text-xl text-yellow-500 '>
-          Lawyer-AI
+          Lawyer<span className="text-text-custom-color-white">-AI</span>
         </a>
       </div>
       <div className='flex-none'>
