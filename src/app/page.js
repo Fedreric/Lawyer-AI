@@ -11,9 +11,9 @@ const Home = () => {
           <div className='bg-custom-color-dark text-text-custom-color-white p-4 mt-4'>
             <input className='text-xl w-full' type='file' />
           </div>
-          <div className='flex flex-col items-center p-24'>
-            <button className='p-4 bg-custom-color-dark text-text-custom-color-white mt-4 rounded-sm hover:bg-slate-900'>
-              Submit
+          <div className=' flex flex-col items-center p-24'>
+            <button className='w-full p-4 bg-custom-color-dark text-text-custom-color-white mt-4 rounded-sm hover:bg-slate-900'>
+              SUBMIT
             </button>
           </div>
         </form>

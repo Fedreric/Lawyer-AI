@@ -19,7 +19,7 @@ const DocGenerated = () => {
           ></textarea>
           <section className='flex flex-col items-center md:flex-row md:justify-between gap-2'>
             <div className='flex justify-center bg-custom-color-dark w-full rounded-sm'>
-              <button className='w-full bg-custom-color-dark text-center text-white px-4 py-2 rounded hover:bg-slate-900'>
+              <button className='w-80 bg-custom-color-dark text-center text-white px-4 py-2 rounded hover:bg-slate-900'>
                 DOWNLOAD PDF
               </button>
             </div>
