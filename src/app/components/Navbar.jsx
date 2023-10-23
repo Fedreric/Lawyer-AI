@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className='flex-none'>
         <ul className='menu menu-horizontal'>
           <li>
-            <Link href={"/app/page.js"} className="">
+            <Link href={"/4_link_navigation/CreateNewResume"} className="">
              Create new resume
             </Link>  
           </li>
