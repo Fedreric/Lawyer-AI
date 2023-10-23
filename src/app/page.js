@@ -1,17 +1,22 @@
-
 const Home = () => {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center p-24 bg-bg-custom-color shadow-md">
-        <div className="   p-4 mt-4 ">
-          <h1 className="  text-black text-5xl text-center ">Resume your contract and more</h1>
+      <main className='flex h-screen flex-col items-center px-8 pt-20 bg-bg-custom-color shadow-md'>
+        <div className='p-4 mt-4 '>
+          <h1 className='text-black text-3xl text-center'>
+            Resume your contract and more
+          </h1>
         </div>
-        <div className="bg-gray-800 p-4 mt-4">
-          <input className="text-2xl w-full" type="file" />
-        </div>
-        <div className="flex min-h-screen flex-col items-center p-24">
-        <button className="bg-gray-800 p-4 mt-4">Submit</button> 
-        </div>
+        <form>
+          <div className='bg-custom-color-dark text-text-custom-color-white p-4 mt-4'>
+            <input className='text-xl w-full' type='file' />
+          </div>
+          <div className='flex flex-col items-center p-24'>
+            <button className='p-4 bg-custom-color-dark text-text-custom-color-white mt-4 rounded-sm hover:bg-slate-900'>
+              Submit
+            </button>
+          </div>
+        </form>
       </main>
     </>
   );

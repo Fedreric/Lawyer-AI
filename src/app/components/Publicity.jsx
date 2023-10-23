@@ -26,8 +26,8 @@ export default function Publicity() {
           </Link>
         </p>
         <div className='h-[15em] flex items-end justify-center animate-pulse md:hidden'>
-          <Link href={"#main"} className='text-xl flex'>
-            Go to resume {arrowDown}
+          <Link href={"#main"}>
+           {arrowDown}
           </Link>
         </div>
       </div>

@@ -21,10 +21,9 @@ const Register = () => {
   };
 
   return (
-    <>
-      <div className="h-screen flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color">
+      <div className="h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <picture>
+          <picture className='lg:hidden'>
             <Image src={logo} alt="Logo" height={'150'} className="mx-auto animate-spin" />
           </picture>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-custom-color-dark">
@@ -33,13 +32,13 @@ const Register = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-4 md:space-y-2" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="text"
                 className="block text-sm font-medium leading-6 text-custom-color-dark"
               >
-                First Name
+                Name
               </label>
               <div className="mt-2">
                 <input
@@ -47,27 +46,7 @@ const Register = () => {
                   name="user"
                   type="text"
                   autoComplete="text"
-                  placeholder="John"
-                  required
-                  className="bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium leading-6 text-custom-color-dark"
-              >
-                Last Name
-              </label>
-              <div className="mt-2">
-                <input
-                  id="user"
-                  name="user"
-                  type="text"
-                  autoComplete="text"
-                  placeholder="Doe"
+                  placeholder="John Doe"
                   required
                   className="bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6"
                 />
@@ -83,31 +62,11 @@ const Register = () => {
               </label>
               <div className="mt-2">
                 <input
-                  id="user"
-                  name="user"
+                  id="email"
+                  name="email"
                   type="email"
                   autoComplete="text"
                   placeholder="johndoe@hotmail.com"
-                  required
-                  className="bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium leading-6 text-custom-color-dark"
-              >
-                Birthday
-              </label>
-              <div className="mt-2">
-                <input
-                  id="user"
-                  name="user"
-                  type="date"
-                  autoComplete="text"
-                  placeholder="dd-mm-aaaa"
                   required
                   className="bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6"
                 />
@@ -174,7 +133,7 @@ const Register = () => {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-custom-color-dark">
+          <p className="mt-1 text-center text-sm text-custom-color-dark">
             Did you have an account?{' '}
             <Link
               href="/login"
@@ -185,7 +144,6 @@ const Register = () => {
           </p>
         </div>
       </div>
-    </>
   );
 };
 
