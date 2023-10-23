@@ -4,14 +4,14 @@ const Navbar = () => {
   return (
     <div className='navbar bg-custom-color-dark text-text-custom-color-white fixed'>
       <div className='flex-1'>
-      <Link className='btn btn-ghost normal-case text-xl text-yellow-500 ' href={"/4_link_navigation/CreateNewResume"}>
+      <Link className='btn btn-ghost normal-case text-xl text-yellow-500 ' href={"/"}>
         Lawyer-AI
         </Link>
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal'>
           <li>
-            <Link href={"/4_link_navigation/CreateNewResume"} className="">
+            <Link href={"/"} className="">
              Create new resume
             </Link>  
           </li>
@@ -26,7 +26,7 @@ const Navbar = () => {
                   <Link href={"/register"}>Register</Link>
                 </li>
                 <li>
-                  <Link href={"/4_link_navigation/CreateNewResume"}>New resume</Link>
+                  <Link href={"/"}>New resume</Link>
                 </li>
               </ul>
             </details>
