@@ -4,27 +4,29 @@ const Navbar = () => {
   return (
     <div className='navbar bg-custom-color-dark text-text-custom-color-white fixed'>
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-xl text-yellow-500 '>
-          Lawyer-AI
-        </a>
+      <Link className='btn btn-ghost normal-case text-xl text-yellow-500 ' href={"/"}>
+        Lawyer-AI
+        </Link>
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal'>
           <li>
-            <a href='@/*Home'>Create new resume</a>
+            <Link href={"/"} className="">
+             Create new resume
+            </Link>  
           </li>
           <li>
             <details>
               <summary>📜</summary>
               <ul className='p-1 bg-base-100'>
                 <li>
-                  <a href='@/*Navbar'>Log-in</a>
+                  <Link href="/login">Log-in</Link>
                 </li>
                 <li>
-                  <a>Register</a>
+                  <Link href={"/register"}>Register</Link>
                 </li>
                 <li>
-                  <a>New resume</a>
+                  <Link href={"/"}>New resume</Link>
                 </li>
               </ul>
             </details>
