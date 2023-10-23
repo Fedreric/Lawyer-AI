@@ -6,7 +6,9 @@
 html{
   scroll-behavior: smooth;
 }
-
+textarea{
+  resize: none;
+}
 /* Barra de desplazamiento en sí */
 ::-webkit-scrollbar {
     width: 12px; /* Ancho de la barra de desplazamiento vertical */
