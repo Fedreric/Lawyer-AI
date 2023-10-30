@@ -1,3 +1,5 @@
+import UploadFile from "./components/UploadFile.jsx";
+
 const Home = () => {
   return (
     <>
@@ -7,16 +9,7 @@ const Home = () => {
             Resume your contract and more
           </h1>
         </div>
-        <form>
-          <div className='bg-custom-color-dark text-text-custom-color-white p-4 mt-4'>
-            <input className='text-xl w-full' type='file' />
-          </div>
-          <div className='flex flex-col items-center p-24'>
-            <button className='p-4 bg-custom-color-dark text-text-custom-color-white mt-4 rounded-sm hover:bg-slate-900'>
-              Submit
-            </button>
-          </div>
-        </form>
+        <UploadFile></UploadFile>
       </main>
     </>
   );
