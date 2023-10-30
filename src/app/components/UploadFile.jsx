@@ -10,6 +10,7 @@ export default function UploadFile() {
     try {
       const data = new FormData();
       data.set("file", file);
+      data.append("userId", 1);
 
       const res = await fetch("/api/upload", {
         method: "POST",
