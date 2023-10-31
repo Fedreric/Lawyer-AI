@@ -33,7 +33,6 @@ export async function POST(request) {
         status: 201
     });
   } catch (error) {
-    console.log(error.code)
     if(error.code === 'P2002'){
         return NextResponse.json(
             {
