@@ -28,7 +28,7 @@ model Resume {
   originalID    Int         @map("original_id")
   original      OriginalDoc @relation(fields: [originalID], references: [originalId])
   name          String
-  date          DateTime
+  date          DateTime    @default(now())
   resumeContent String      @map("resume_content")
 
   @@map("resume")
