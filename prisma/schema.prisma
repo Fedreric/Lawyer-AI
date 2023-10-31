@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId    Int           @id @default(autoincrement()) @map("user_id")
+  name      String
+  email     String        @unique
+  password  String
+  resumes   Resume[]
+  originals OriginalDoc[]
+
+  @@map("user")
+}
+
+model Resume {
+  resumeId      Int         @id @default(autoincrement()) @map("resume_id")
+  authorId      Int         @map("author_id")
+  user          User        @relation(fields: [authorId], references: [userId])
+  originalID    Int         @map("original_id")
+  original      OriginalDoc @relation(fields: [originalID], references: [originalId])
+  name          String
+  date          DateTime    @default(now())
+  resumeContent String      @map("resume_content")
+
+  @@map("resume")
+}
+
+model OriginalDoc {
+  originalId      Int      @id @default(autoincrement()) @map("original_id")
+  authorId        Int      @map("user_id")
+  user            User     @relation(fields: [authorId], references: [userId])
+  originalContent String   @map("original_content")
+  resumes         Resume[]
+
+  @@map("original_doc")
+}
