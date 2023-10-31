@@ -30,6 +30,7 @@ export default function UploadFile() {
             type='file'
             name='file'
             onChange={(e) => setFile(e.target.files?.[0])}
+            accept=".pdf"
           />
         </div>
         <div className='flex flex-col items-center p-24'>
