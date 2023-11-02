@@ -24,9 +24,9 @@ model User {
 model Resume {
   resumeId      Int         @id @default(autoincrement()) @map("resume_id")
   authorId      Int         @map("author_id")
-  user          User        @relation(fields: [authorId], references: [userId])
+  user          User        @relation(fields: [authorId], references: [userId], onDelete: Cascade)
   originalID    Int         @map("original_id")
-  original      OriginalDoc @relation(fields: [originalID], references: [originalId])
+  original      OriginalDoc @relation(fields: [originalID], references: [originalId], onDelete: Cascade)
   name          String
   date          DateTime    @default(now())
   resumeContent String      @map("resume_content")
@@ -37,7 +37,7 @@ model Resume {
 model OriginalDoc {
   originalId      Int      @id @default(autoincrement()) @map("original_id")
   authorId        Int      @map("user_id")
-  user            User     @relation(fields: [authorId], references: [userId])
+  user            User     @relation(fields: [authorId], references: [userId], onDelete: Cascade)
   originalContent String   @map("original_content")
   resumes         Resume[]
 
