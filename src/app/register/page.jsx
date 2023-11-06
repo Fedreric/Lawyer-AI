@@ -9,15 +9,50 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password === confirmPassword) {
-      // Passwords match, can submit the form
-      // Add form submission logic here
+      const { confirmPassword, ...data } = formData;
+      console.log(data);
+      try {
+        const response = await fetch('/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),          
+        });
+
+        if (response.ok) {
+          // La solicitud se completó exitosamente
+          // Puedes manejar la respuesta aquí si es necesario
+          console.log('Usuario registrado exitosamente');
+        } else {
+          // La solicitud falló
+          console.error('Error al registrar el usuario');
+        }
+      } catch (error) {
+        console.error('Error al enviar la solicitud:', error);
+      }
     } else {
       setError('Passwords do not match');
     }
+  };
+
+   // Update the form data state when inputs change
+   const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
@@ -43,8 +78,9 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="user"
-                  name="user"
+                  name="name"
                   type="text"
+                  onChange={handleInputChange}
                   autoComplete="text"
                   placeholder="John Doe"
                   required
@@ -65,6 +101,7 @@ const Register = () => {
                   id="email"
                   name="email"
                   type="email"
+                  onChange={handleInputChange}
                   autoComplete="text"
                   placeholder="johndoe@hotmail.com"
                   required
@@ -91,7 +128,10 @@ const Register = () => {
                   placeholder="Johndoe123"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    handleInputChange(e); // También actualiza el formData para el campo de contraseña
+                  }}
                   className="bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6"
                 />
               </div>
