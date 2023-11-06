@@ -34,7 +34,7 @@ export async function POST(request) {
           userId: existingUser.userId,
           name: existingUser.name
       },{
-          status: 201
+          status: 200
       });
     } catch (error) {
       if(error.code === 'P2002'){
