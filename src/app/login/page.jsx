@@ -1,27 +1,68 @@
-'use client'
-import Link from "next/link";
-import Image from "next/image";
-import logo from "@/assets/logo.png";
-import { useState } from "react";
-import { user } from "@/helpers/usuario";
-import { useRouter } from "next/navigation";
+// 'use client'
+// import Link from "next/link";
+// import Image from "next/image";
+// import logo from "@/assets/logo.png";
+// import { useState } from "react";
+// import { user } from "@/helpers/usuario";
+// import { useRouter } from "next/navigation";
 
-const Login = () => {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const router = useRouter()
+// const Login = () => {
+//   const [email, setEmail] = useState()
+//   const [password, setPassword] = useState()
+//   const router = useRouter()
 
-  const login = () =>{
-    if(email === user.email && password === user.password){
-      sessionStorage.setItem("usuario", email);
-      router.push('/')
-    } else {
-      console.log('NOO logueado pa')
-    }
+//   const login = () =>{
+//     if(email === user.email && password === user.password){
+//       sessionStorage.setItem("usuario", email);
+//       router.push('/')
+//     } else {
+//       console.log('NOO logueado pa')
+//     }
     
-  }
+//   }
 
-  return (
+//   return (
+  'use client'
+  import Link from "next/link";
+  import Image from "next/image";
+  import logo from "@/assets/logo.png";
+  import { useState } from "react";
+  import { user } from "@/helpers/usuario";
+  import { useRouter } from "next/navigation";
+  
+  const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const router = useRouter()
+  
+    const login = async (e) => {
+      e.preventDefault();
+  
+      // Assuming user authentication happens on the backend
+      try {
+        const response = await fetch('/api/user/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+  
+        if (response.ok) {
+          // Login successful, redirect or handle accordingly
+          sessionStorage.setItem("usuario", email);
+          router.push('/');
+        } else {
+          // Login failed
+          console.log('Login failed');
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
+    };
+  
+  
+    return (
     <>
       <div className='h-screen flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
