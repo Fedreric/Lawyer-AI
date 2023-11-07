@@ -54,10 +54,12 @@ export async function POST(request) {
       }
     });
 
+    const {password: _, ...user} = newUser
+
     return NextResponse.json(
       {
         message: "Created user",
-        user: newUser
+        user: user
       },
       {
         status: 201
