@@ -12,12 +12,12 @@ export async function POST(request) {
 
     const validation = registerValidation({ name, email, password });
 
-    if (validation.success === false) {
+    if (!validation.success) {
       return NextResponse.json(
         {
           errors: validation.error
         },
-        { status: 400 }
+        { status: 404 }
       );
     }
 
