@@ -6,7 +6,16 @@ import { registerValidation } from "../../services/validations/register";
 
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, confirmPassword } = await request.json();
+
+    if(password !== confirmPassword){
+      return NextResponse.json(
+        {
+          message: 'Passwords do not match'
+        },
+        { status: 401 }
+      );
+    }
 
     const validation = registerValidation({ name, email, password });
 
