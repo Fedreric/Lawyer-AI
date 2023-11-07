@@ -5,20 +5,26 @@ import logo from "@/assets/logo.png";
 import { useState } from "react";
 import { user } from "@/helpers/usuario";
 import { useRouter } from "next/navigation";
+import { signIn } from 'next-auth/react'
+
 
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const router = useRouter()
 
-  const login = () =>{
-    if(email === user.email && password === user.password){
-      sessionStorage.setItem("usuario", email);
-      router.push('/')
-    } else {
-      console.log('NOO logueado pa')
-    }
-    
+  const login = async (event) =>{
+    // if(email === user.email && password === user.password){
+    //   sessionStorage.setItem("usuario", email);
+    //   router.push('/')
+    // } else {
+    //   console.log('NOO logueado pa')
+    // }
+    event.preventDefault()
+    await signIn('credentials', {
+      email, 
+      password
+    })
   }
 
   return (
@@ -39,7 +45,7 @@ const Login = () => {
         </div>
 
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-4' action='#' method='POST' onSubmit={login}>
+          <form className='space-y-4' onSubmit={login}>
             <div>
               <label
                 htmlFor='text'
