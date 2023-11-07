@@ -1,11 +1,10 @@
 import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import path from "path";
 import PdfParse from "pdf-parse";
 import fs from "fs";
 import { resume } from "../services/resume";
-const prisma = new PrismaClient();
+import prisma from "@/libs/db";
 
 export async function POST(request) {
   try {
