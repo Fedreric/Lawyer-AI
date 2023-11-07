@@ -1,16 +1,8 @@
-'use client'
-
 import History from "./History";
 import Publicity from "./Publicity";
-export default function LateralLayout() {
-      const usuario = sessionStorage.getItem('usuario');
-  return (
-    <>
-    {usuario ? (
-            <History />
-        ) : (
-            <Publicity />  
-        )}
-    </>
-  )
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+export default async function LateralLayout() {
+  const sesion = await getServerSession(authOptions);
+  return <>{sesion ? <History /> : <Publicity />}</>;
 }
