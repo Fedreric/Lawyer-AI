@@ -4,8 +4,12 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
 const Register = () => {
   const [response, setResponse] = useState();
+  const router =  useRouter();
   const {
     register,
     handleSubmit,
@@ -22,10 +26,16 @@ const Register = () => {
     })
     const resJSON = await res.json(); 
     setResponse(resJSON)
+    if(res.status === 201){
+      Swal.fire({
+        title: "Registered!",
+        text: "please login",
+        icon: "success",
+        confirmButtonColor: "#F5A524",
+      });
+      router.push('/login')
+    }
   });
-
-  // console.log(errors)
-  // console.log(response)
 
   return (
     <div className='h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
