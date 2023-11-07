@@ -18,7 +18,7 @@ export async function POST(request) {
       if(!existingUser){
         return NextResponse.json({
           message: 'Invalid email or password'
-        },{ status: 400 })
+        },{ status: 401 })
       }
   
       const validPassword = bcrypt.compareSync(password, existingUser.password)
@@ -26,7 +26,7 @@ export async function POST(request) {
       if(!validPassword){
         return NextResponse.json({
           message: 'Invalid email or password'
-        },{ status: 400 })
+        },{ status: 401 })
       }
   
       return NextResponse.json({
@@ -34,7 +34,7 @@ export async function POST(request) {
           userId: existingUser.userId,
           name: existingUser.name
       },{
-          status: 201
+          status: 200
       });
     } catch (error) {
       if(error.code === 'P2002'){
