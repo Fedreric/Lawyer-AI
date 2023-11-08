@@ -1,68 +1,45 @@
-// 'use client'
-// import Link from "next/link";
-// import Image from "next/image";
-// import logo from "@/assets/logo.png";
-// import { useState } from "react";
-// import { user } from "@/helpers/usuario";
-// import { useRouter } from "next/navigation";
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-// const Login = () => {
-//   const [email, setEmail] = useState()
-//   const [password, setPassword] = useState()
-//   const router = useRouter()
+const Login = () => {
+  const router = useRouter();
+  const [error, setError] = useState();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+  const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false
+    });
+    console.log(res);
+    if(res.error){
+      setError(res.error)
+    }else{
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Welcome to LawyerAI",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      router.push('/')
+      router.refresh();
+    }
+  });
 
-//   const login = () =>{
-//     if(email === user.email && password === user.password){
-//       sessionStorage.setItem("usuario", email);
-//       router.push('/')
-//     } else {
-//       console.log('NOO logueado pa')
-//     }
-    
-//   }
-
-//   return (
-  'use client'
-  import Link from "next/link";
-  import Image from "next/image";
-  import logo from "@/assets/logo.png";
-  import { useState } from "react";
-  import { user } from "@/helpers/usuario";
-  import { useRouter } from "next/navigation";
-  
-  const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const router = useRouter()
-  
-    const login = async (e) => {
-      e.preventDefault();
-  
-      // Assuming user authentication happens on the backend
-      try {
-        const response = await fetch('/api/user/auth', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-  
-        if (response.ok) {
-          // Login successful, redirect or handle accordingly
-          sessionStorage.setItem("usuario", email);
-          router.push('/');
-        } else {
-          // Login failed
-          console.log('Login failed');
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
-      }
-    };
-  
-  
-    return (
+  return (
     <>
       <div className='h-screen flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -78,9 +55,13 @@
             Nice to see you!
           </h2>
         </div>
-
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-4' action='#' method='POST' onSubmit={login}>
+        {
+          error &&(
+            <p className="bg-red-500 text-lg text-white text-center p-2 mb-2 rounded">{error}</p>
+          )
+        }
+          <form className='space-y-4' onSubmit={onSubmit}>
             <div>
               <label
                 htmlFor='text'
@@ -90,17 +71,25 @@
               </label>
               <div className='mt-2'>
                 <input
-                  id='user'
-                  name='user'
+                  id='email'
+                  name='email'
                   type='email'
                   autoComplete='text'
                   placeholder='johndoe@hotmail.com'
-                  value={email}
-                  onChange={(e)=>setEmail(e.target.value)}
-                  required
                   className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+                  {...register("email", {
+                    required: {
+                      value: true,
+                      message: "Email is required"
+                    }
+                  })}
                 />
               </div>
+              {errors.email && (
+                <span className='text-red-700 text-sm'>
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -119,14 +108,21 @@
                   type='password'
                   autoComplete='current-password'
                   placeholder='Johndoe123'
-                  value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
-                  required
                   className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Password is required"
+                    }
+                  })}
                 />
               </div>
+              {errors.password && (
+                <span className='text-red-700 text-sm'>
+                  {errors.password.message}
+                </span>
+              )}
             </div>
-
             <div>
               <button
                 type='submit'

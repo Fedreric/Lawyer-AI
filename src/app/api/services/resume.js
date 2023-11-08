@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "@/libs/db";
+
 export const resume = {
     create: async ({userId, originalId, fileName, resumeContent }) =>{
        return await prisma.resume.create({
