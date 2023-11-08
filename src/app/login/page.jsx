@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -35,6 +35,7 @@ const Login = () => {
         timer: 1500
       });
       router.push('/')
+      router.refresh();
     }
   });
 
