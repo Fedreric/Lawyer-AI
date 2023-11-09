@@ -22,8 +22,9 @@ const Register = () => {
       body: JSON.stringify(data),
       headers: {
         'Content-type': 'application/json'
-      }
+      },
     })
+    console.log(data)
     const resJSON = await res.json(); 
     setResponse(resJSON)
     if(res.status === 201){

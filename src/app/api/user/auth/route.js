@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { helpers } from "../../services/helpers";
 import prisma from "@/libs/db";
 import bcrypt from "bcrypt";
-
+import jwt from 'jsonwebtoken';
 
 export async function POST(request) {
     try {
@@ -13,7 +13,7 @@ export async function POST(request) {
           email
         }
       })
-  
+      
       if(!existingUser){
         return NextResponse.json({
           message: 'Invalid email or password'
@@ -21,20 +21,28 @@ export async function POST(request) {
       }
   
       const validPassword = bcrypt.compareSync(password, existingUser.password)
-
+      
       if(!validPassword){
         return NextResponse.json({
           message: 'Invalid email or password'
         },{ status: 401 })
       }
-  
+      
+      // Si el usuario es autenticado correctamente:
+      const token = jwt.sign({ email: existingUser.email }, 'privateKey', { expiresIn: '1d' });
+      // Imprimir el token en la consola
+      console.log('Token generado:', token);
+      
       return NextResponse.json({
-          message:'Log in',
-          userId: existingUser.userId,
-          name: existingUser.name
-      },{
-          status: 200
+        message:'Log in',
+        userId: existingUser.userId,
+        name: existingUser.name,
+        token: token // Añade el token en la respuesta
+      },
+      {
+        status: 200          
       });
+      
     } catch (error) {
       if(error.code === 'P2002'){
           return NextResponse.json(
