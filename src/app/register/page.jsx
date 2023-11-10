@@ -6,6 +6,15 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object({
+  name: yup.string().min(2, "Name must have at least two letters").required("name is required"),
+  email: yup.string().email("Email format is not valid").matches(/^.+@.+\..+$/, "Email must have '@' and '.com' or similar").required("Email is required"),
+  password: yup.string().min(7, "Password must be at least 7 characters").required("Password is required"),
+  confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match").required("Confirm Password is required"),
+})
 
 const Register = () => {
   const [response, setResponse] = useState();
@@ -14,8 +23,10 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
-
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
+  
   const onSubmit = handleSubmit(async (data) => {
     const res =  await fetch('/api/user/register',{
       method:'POST',
@@ -37,7 +48,7 @@ const Register = () => {
       router.push('/login')
     }
   });
-
+  
   return (
     <div className='h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
