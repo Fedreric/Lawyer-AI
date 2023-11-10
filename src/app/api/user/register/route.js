@@ -56,7 +56,11 @@ export async function POST(request) {
     });
 
     // Ahora, después de crear el usuario, generas un token JWT para este usuario recién creado
-    const token = jwt.sign({ userId: newUser.id }, 'privateKey', { expiresIn: '1d' });
+    const token = jwt.sign({
+      userId: newUser.id,
+      name: newUser.name,
+      email: newUser.email
+    }, 'privateKey', { expiresIn: '1d' });
     // Imprimir el token en la consola
     console.log('Token generado:', token);
 
