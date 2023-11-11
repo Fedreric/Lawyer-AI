@@ -7,6 +7,18 @@ import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+
+const schema = yup.object().shape({
+  email: yup.string().email('Put a email@example.com valid').required('The email is obligate'),
+  password: yup.string().required('The password is obligate')
+});
+
+const { register, handleSubmit, formState: { errors }, control } = useForm({
+  resolver: yupResolver(schema),
+}); 
 
 const Login = () => {
   const router = useRouter();
@@ -62,76 +74,80 @@ const Login = () => {
           )
         }
           <form className='space-y-4' onSubmit={onSubmit}>
-            <div>
-              <label
-                htmlFor='text'
-                className='block text-sm font-medium leading-6 text-custom-color-dark'
-              >
-                E-mail
-              </label>
-              <div className='mt-2'>
-                <input
-                  id='email'
-                  name='email'
-                  type='email'
-                  autoComplete='text'
-                  placeholder='johndoe@hotmail.com'
-                  className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                  {...register("email", {
-                    required: {
-                      value: true,
-                      message: "Email is required"
-                    }
-                  })}
-                />
-              </div>
-              {errors.email && (
-                <span className='text-red-700 text-sm'>
-                  {errors.email.message}
-                </span>
-              )}
-            </div>
+  <div>
+    <label
+      htmlFor='text'
+      className='block text-sm font-medium leading-6 text-custom-color-dark'
+    >
+      E-mail
+    </label>
+    <div className='mt-2'>
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <input
+            id='email'
+            name='email'
+            type='email'
+            autoComplete='text'
+            placeholder='johndoe@hotmail.com'
+            className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+            {...field}
+          />
+        )}
+      />
+    </div>
+    {errors.email && (
+      <span className='text-red-700 text-sm'>
+        {errors.email.message}
+      </span>
+    )}
+  </div>
 
-            <div>
-              <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium leading-6 text-custom-color-dark'
-                >
-                  Password
-                </label>
-              </div>
-              <div className='mt-2'>
-                <input
-                  id='password'
-                  name='password'
-                  type='password'
-                  autoComplete='current-password'
-                  placeholder='Johndoe123'
-                  className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                  {...register("password", {
-                    required: {
-                      value: true,
-                      message: "Password is required"
-                    }
-                  })}
-                />
-              </div>
-              {errors.password && (
-                <span className='text-red-700 text-sm'>
-                  {errors.password.message}
-                </span>
-              )}
-            </div>
-            <div>
-              <button
-                type='submit'
-                className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-              >
-                Login
-              </button>
-            </div>
-          </form>
+  <div>
+    <div className='flex items-center justify-between'>
+      <label
+        htmlFor='password'
+        className='block text-sm font-medium leading-6 text-custom-color-dark'
+      >
+        Password
+      </label>
+    </div>
+    <div className='mt-2'>
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <input
+            id='password'
+            name='password'
+            type='password'
+            autoComplete='current-password'
+            placeholder='Johndoe123'
+            className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+            {...field}
+          />
+        )}
+      />
+    </div>
+    {errors.password && (
+      <span className='text-red-700 text-sm'>
+        {errors.password.message}
+      </span>
+    )}
+  </div>
+
+  <div>
+    <button
+      type='submit'
+      className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+    >
+      Login
+    </button>
+  </div>
+</form>
+
 
           <p className='mt-10 text-center text-sm text-custom-color-dark'>
             Not a member?{" "}
