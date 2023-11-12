@@ -1,33 +1,28 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
-import logo from "@/assets/logo.png";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-
-
-const schema = yup.object().shape({
-  email: yup.string().email('Put a email@example.com valid').required('The email is obligate'),
-  password: yup.string().required('The password is obligate')
-});
-
-const { register, handleSubmit, formState: { errors }, control } = useForm({
-  resolver: yupResolver(schema),
-}); 
+import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
 
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
+
+  const schema = yup.object().shape({
+    email: yup.string().email('Put a valid email@example.com').required('The email is required'),
+    password: yup.string().required('The password is required'),
+  });
+
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     const res = await signIn("credentials", {
@@ -35,10 +30,10 @@ const Login = () => {
       password: data.password,
       redirect: false
     });
-    console.log(res);
-    if(res.error){
-      setError(res.error)
-    }else{
+
+    if (res.error) {
+      setError(res.error);
+    } else {
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -46,7 +41,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1500
       });
-      router.push('/')
+      router.push('/');
       router.refresh();
     }
   });
@@ -68,11 +63,9 @@ const Login = () => {
           </h2>
         </div>
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-        {
-          error &&(
+          {error && (
             <p className="bg-red-500 text-lg text-white text-center p-2 mb-2 rounded">{error}</p>
-          )
-        }
+          )}
           <form className='space-y-4' onSubmit={onSubmit}>
   <div>
     <label
@@ -147,8 +140,6 @@ const Login = () => {
     </button>
   </div>
 </form>
-
-
           <p className='mt-10 text-center text-sm text-custom-color-dark'>
             Not a member?{" "}
             <Link
