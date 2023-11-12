@@ -11,19 +11,19 @@ import { useState } from "react";
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState();
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
+
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false
     });
-    console.log(res);
     if(res.error){
       setError(res.error)
     }else{
