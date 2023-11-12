@@ -3,7 +3,6 @@ import prisma from "@/libs/db";
 import { helpers } from "../../services/helpers";
 import bcrypt from "bcrypt";
 import { registerValidation } from "../../services/validations/register";
-import jwt from 'jsonwebtoken';
 
 export async function POST(request) {
   try {
@@ -55,22 +54,12 @@ export async function POST(request) {
       }
     });
 
-    // Ahora, después de crear el usuario, generas un token JWT para este usuario recién creado
-    const token = jwt.sign({
-      userId: newUser.id,
-      name: newUser.name,
-      email: newUser.email
-    }, 'privateKey', { expiresIn: '1d' });
-    // Imprimir el token en la consola
-    console.log('Token generado:', token);
-
     const {password: _, ...user} = newUser
 
     return NextResponse.json(
       {
         message: "Created user",
         user: user,
-        token: token // Añade el token en la respuesta
       },
       {
         status: 201
