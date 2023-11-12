@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { headers } from 'next/headers'
 
 export const helpers = {
     itemNoExist: (item) =>{
@@ -16,5 +17,9 @@ export const helpers = {
             },
             { status: 500 }
           );
+    },
+    searchToken: ()=>{
+      const headersList = headers()
+      return headersList.get('x-token')
     }
 }
