@@ -1,8 +1,12 @@
 "use client";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 export default function UploadFile() {
   const [file, setFile] = useState(null);
+  const {data:session} = useSession();
+  const [id, setId] = useState('x');
+console.log(session)
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
@@ -10,7 +14,7 @@ export default function UploadFile() {
     try {
       const data = new FormData();
       data.set("file", file);
-      data.append("userId", 1);
+      data.append("userId", id );
 
       const res = await fetch("/api/upload", {
         method: "POST",

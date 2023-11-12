@@ -24,7 +24,6 @@ const Login = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
