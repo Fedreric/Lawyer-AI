@@ -9,29 +9,35 @@ export const authOptions = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "user@email.com" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, _request) {
-        const userFound = await prisma.user.findUnique({
-            where:{
-                email: credentials.email
-            }
-        })         
+      async authorize(credentials) {
+        const res = await fetch('http://localhost:3000/api/user/auth',{
+          method: 'POST',
+          body: JSON.stringify({
+            email:credentials?.email,
+            password:credentials?.password
+          }),
+          headers: {'Content-type':'application/json'}
+        })
 
-        if(!userFound) throw new Error('No user found')
+        if(!res.ok) throw new Error('Email or password invalid')
 
-        const validPassword = bcrypt.compareSync(credentials.password, userFound.password)
-
-        if(!validPassword)throw new Error('No user found')
-
-        return {
-            id: userFound.id,
-            name: userFound.name,
-            email:userFound.email
-        }
+        const user = await res.json();
+        console.log(user)
+        return user;
       }
     })
-  ],
+   ],
+  //  ,callbacks:{
+  //   async jwt({token, user}){
+  //     return{...token, ...user}
+  //   },
+  //   async session({session, token}){
+  //     session.user =  token;
+  //     return session;
+  //   }
+  // },
   pages: {
     signIn:"/login"
   }
