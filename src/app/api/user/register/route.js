@@ -24,7 +24,7 @@ export async function POST(request) {
         {
           errors: validation.error
         },
-        { status: 404 }
+        { status: 400 }
       );
     }
 
@@ -59,7 +59,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Created user",
-        user: user
+        user: user,
       },
       {
         status: 201
