@@ -1,12 +1,12 @@
+'use client'
 import { login, user } from "@/helpers/icons";
 import Link from "next/link";
 import Logout from "./Logout";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { useSession } from "next-auth/react";
 
-const Navbar = async () => {
-  const sesion = await getServerSession(authOptions);
-  console.log(sesion);
+const Navbar = () => {
+  const {data:session} = useSession();
+
   return (
     <div className='navbar bg-custom-color-dark text-text-custom-color-white fixed'>
       <div className='flex-1'>
@@ -19,7 +19,7 @@ const Navbar = async () => {
       </div>
       <div className='flex-none'>
         <ul className='menu menu-horizontal'>
-          {!sesion && (
+          {!session && (
             <li>
               <Link href={"/"} className='hover:text-text-custom-color-Details'>
                 Create new resume
@@ -32,7 +32,7 @@ const Navbar = async () => {
                 {user}
               </summary>
               <ul className='bg-custom-color-dark mt-10'>
-                {!sesion ? (
+                {!session ? (
                   <li className='w-auto'>
                     <Link
                       href='/login'
