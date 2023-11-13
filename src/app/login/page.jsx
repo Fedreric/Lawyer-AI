@@ -15,8 +15,17 @@ const Login = () => {
   const [error, setError] = useState();
 
   const schema = yup.object().shape({
-    email: yup.string().email('Put a valid email@example.com').required('The email is required').matches(/^.+@.+\..+$/, "Email must be valid").required("Email is required"),
-    password: yup.string().required('The password is required').min(7, "Password must be at least 7 characters").required("Password is required"),
+    email: yup
+      .string()
+      .email("Put a valid email@example.com")
+      .required("The email is required")
+      .matches(/^.+@.+\..+$/, "Email must be valid")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("The password is required")
+      .min(7, "Password must be at least 7 characters")
+      .required("Password is required")
   });
 
   const {
@@ -35,9 +44,11 @@ const Login = () => {
     });
 
     if (res.error) {
-      setError(res.error);
+      toast.error(res.error, {
+        duration: 3000
+      });
     } else {
-      toast.success("Welcome to LawyerAI",{
+      toast.success("Welcome to LawyerAI", {
         position: "top-right",
         duration: 1500
       });
@@ -63,9 +74,6 @@ const Login = () => {
           </h2>
         </div>
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-        {error ? toast.error(error,{
-          duration: 1500
-        }):null}
           <form className='space-y-4' onSubmit={onSubmit}>
             <div>
               <label

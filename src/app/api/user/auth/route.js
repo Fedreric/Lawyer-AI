@@ -2,13 +2,23 @@ import { NextResponse } from "next/server";
 import { helpers } from "../../services/helpers";
 import prisma from "@/libs/db";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-// import { serialize } from "cookie";
 import generateToken from "./token-sign";
+import { authValidation } from "../../services/validations/auth";
 
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
+
+    const validation = authValidation({ email, password });
+
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          errors: validation.error
+        },
+        { status: 400 }
+      );
+    }
 
     const existingUser = await prisma.user.findFirst({
       where: {
