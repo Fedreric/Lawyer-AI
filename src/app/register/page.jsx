@@ -3,9 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
+import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -17,8 +16,8 @@ const schema = yup.object({
 })
 
 const Register = () => {
-  const [response, setResponse] = useState();
   const router =  useRouter();
+
   const {
     register,
     handleSubmit,
@@ -35,15 +34,10 @@ const Register = () => {
         'Content-type': 'application/json'
       },
     })
-    console.log(data)
-    const resJSON = await res.json(); 
-    setResponse(resJSON)
     if(res.status === 201){
-      Swal.fire({
-        title: "Registered!",
-        text: "please login",
-        icon: "success",
-        confirmButtonColor: "#F5A524",
+      toast.success("successfully registered, please login",{
+        position: "top-right",
+        duration: 3000
       });
       router.push('/login')
     }
@@ -176,16 +170,6 @@ const Register = () => {
               <span className='text-red-700 text-sm'>{errors.confirmPassword.message}</span>
             )}
           </div>
-            {/* <div>
-              {
-                response?.errors ? (
-                  response.errors.issues.map(issue => {
-                    <span className='text-red-700 text-sm'>{issue.message}</span>
-                    console.log(issue.message)
-                  })
-                ): null
-              }
-            </div> */}
           <div>
             <button
               type='submit'
