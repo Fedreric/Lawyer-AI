@@ -15,8 +15,8 @@ const Login = () => {
   const [error, setError] = useState();
 
   const schema = yup.object().shape({
-    email: yup.string().email('Put a valid email@example.com').required('The email is required'),
-    password: yup.string().required('The password is required'),
+    email: yup.string().email('Put a valid email@example.com').required('The email is required').matches(/^.+@.+\..+$/, "Email must be valid").required("Email is required"),
+    password: yup.string().required('The password is required').min(7, "Password must be at least 7 characters").required("Password is required"),
   });
 
   const { control, handleSubmit, formState: { errors } } = useForm({
