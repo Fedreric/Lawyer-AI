@@ -1,6 +1,8 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const url = process.env.NEXTAUTH_URL
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -10,7 +12,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:3000/api/user/auth", {
+        const res = await fetch(url+"api/user/auth", {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email,
