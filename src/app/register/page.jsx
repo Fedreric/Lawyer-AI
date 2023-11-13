@@ -10,10 +10,25 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object({
-  name: yup.string().min(2, "Name must have at least two letters").required("name is required"),
-  email: yup.string().email("Email format is not valid").matches(/^.+@.+\..+$/, "Email must have '@' and '.com' or similar").required("Email is required"),
-  password: yup.string().min(7, "Password must be at least 7 characters").required("Password is required"),
-  confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match").required("Confirm Password is required"),
+  name: yup
+    .string()
+    .min(2, "Name must have at least two letters")
+    .required("name is required"),
+  email: yup
+    .string()
+    .email("Email format is not valid")
+    .matches(/^.+@.+\..+$/, "Email must have '@' and '.com' or similar")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(7, "Password must be at least 7 characters")
+    .matches(/[A-Z]/, "Password must have at least one uppercase letter")
+    .matches(/\d/, "Password must have at least one number")
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
 })
 
 const Register = () => {
