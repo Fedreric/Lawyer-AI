@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { signIn } from "next-auth/react";
-import Swal from "sweetalert2";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,8 +19,12 @@ const Login = () => {
     password: yup.string().required('The password is required').min(7, "Password must be at least 7 characters").required("Password is required"),
   });
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
   });
 
   const onSubmit = handleSubmit(async (data) => {
@@ -33,14 +37,11 @@ const Login = () => {
     if (res.error) {
       setError(res.error);
     } else {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Welcome to LawyerAI",
-        showConfirmButton: false,
-        timer: 1500
+      toast.success("Welcome to LawyerAI",{
+        position: "top-right",
+        duration: 1500
       });
-      router.push('/');
+      router.push("/");
       router.refresh();
     }
   });
@@ -62,83 +63,83 @@ const Login = () => {
           </h2>
         </div>
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-          {error && (
-            <p className="bg-red-500 text-lg text-white text-center p-2 mb-2 rounded">{error}</p>
-          )}
+        {error ? toast.error(error,{
+          duration: 1500
+        }):null}
           <form className='space-y-4' onSubmit={onSubmit}>
-  <div>
-    <label
-      htmlFor='text'
-      className='block text-sm font-medium leading-6 text-custom-color-dark'
-    >
-      E-mail
-    </label>
-    <div className='mt-2'>
-      <Controller
-        name="email"
-        control={control}
-        render={({ field }) => (
-          <input
-            id='email'
-            name='email'
-            type='email'
-            autoComplete='text'
-            placeholder='johndoe@hotmail.com'
-            className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-            {...field}
-          />
-        )}
-      />
-    </div>
-    {errors.email && (
-      <span className='text-red-700 text-sm'>
-        {errors.email.message}
-      </span>
-    )}
-  </div>
+            <div>
+              <label
+                htmlFor='text'
+                className='block text-sm font-medium leading-6 text-custom-color-dark'
+              >
+                E-mail
+              </label>
+              <div className='mt-2'>
+                <Controller
+                  name='email'
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      id='email'
+                      name='email'
+                      type='email'
+                      autoComplete='text'
+                      placeholder='johndoe@hotmail.com'
+                      className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+                      {...field}
+                    />
+                  )}
+                />
+              </div>
+              {errors.email && (
+                <span className='text-red-700 text-sm'>
+                  {errors.email.message}
+                </span>
+              )}
+            </div>
 
-  <div>
-    <div className='flex items-center justify-between'>
-      <label
-        htmlFor='password'
-        className='block text-sm font-medium leading-6 text-custom-color-dark'
-      >
-        Password
-      </label>
-    </div>
-    <div className='mt-2'>
-      <Controller
-        name="password"
-        control={control}
-        render={({ field }) => (
-          <input
-            id='password'
-            name='password'
-            type='password'
-            autoComplete='current-password'
-            placeholder='Johndoe123'
-            className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-            {...field}
-          />
-        )}
-      />
-    </div>
-    {errors.password && (
-      <span className='text-red-700 text-sm'>
-        {errors.password.message}
-      </span>
-    )}
-  </div>
+            <div>
+              <div className='flex items-center justify-between'>
+                <label
+                  htmlFor='password'
+                  className='block text-sm font-medium leading-6 text-custom-color-dark'
+                >
+                  Password
+                </label>
+              </div>
+              <div className='mt-2'>
+                <Controller
+                  name='password'
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      id='password'
+                      name='password'
+                      type='password'
+                      autoComplete='current-password'
+                      placeholder='Johndoe123'
+                      className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
+                      {...field}
+                    />
+                  )}
+                />
+              </div>
+              {errors.password && (
+                <span className='text-red-700 text-sm'>
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
 
-  <div>
-    <button
-      type='submit'
-      className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-    >
-      Login
-    </button>
-  </div>
-</form>
+            <div>
+              <button
+                type='submit'
+                className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              >
+                Login
+              </button>
+            </div>
+          </form>
           <p className='mt-10 text-center text-sm text-custom-color-dark'>
             Not a member?{" "}
             <Link
