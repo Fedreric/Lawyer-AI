@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/libs/db";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
 export const authOptions = {
   providers: [
@@ -9,40 +9,40 @@ export const authOptions = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "user@email.com" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        const res = await fetch('http://localhost:3000/api/user/auth',{
-          method: 'POST',
+        const res = await fetch("http://localhost:3000/api/user/auth", {
+          method: "POST",
           body: JSON.stringify({
-            email:credentials?.email,
-            password:credentials?.password
+            email: credentials?.email,
+            password: credentials?.password
           }),
-          headers: {'Content-type':'application/json'}
-        })
+          headers: { "Content-type": "application/json" }
+        });
 
-        if(!res.ok) throw new Error('Email or password invalid')
+        if (!res.ok) throw new Error("Email or password invalid");
 
         const user = await res.json();
-        console.log(user)
+        console.log(user);
         return user;
       }
     })
-   ],
-  //  ,callbacks:{
-  //   async jwt({token, user}){
-  //     return{...token, ...user}
-  //   },
-  //   async session({session, token}){
-  //     session.user =  token;
-  //     return session;
-  //   }
-  // },
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token;
+      return session;
+    }
+  },
   pages: {
-    signIn:"/login"
+    signIn: "/login"
   }
 };
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
