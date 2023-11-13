@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import LateralLayout from "./components/LateralLayout";
 import SessionAuthProvider from "@/context/SessionAuthProvider";
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           <section className='flex flex-col md:flex-row'>
             <LateralLayout></LateralLayout>
             <div className='w-full md:order-2'>{children}</div>
+            <Toaster />
           </section>
         </SessionAuthProvider>
       </body>
