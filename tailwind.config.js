@@ -15,10 +15,20 @@ module.exports = {
       colors:{
         'bg-custom-color':'#dcbc88',
         'text-custom-color-white':'#fafafa',
-        'text-custom-color-dark':'#05000A',
+        'custom-color-dark':'#05000A',
         'text-custom-color-Details':'#F5A524'
-      }
+      },      
+      keyframes: {
+          spin: {
+            '0%, 100%': { transform: 'rotate(-5deg)' },
+            '50%': { transform: 'rotate(5deg)' },
+          }
+        },
+      
+      animation: {
+        'spin': "spin 3s linear infinite",
+      },      
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
