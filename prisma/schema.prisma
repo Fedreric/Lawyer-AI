@@ -36,8 +36,8 @@ model Resume {
 
 model OriginalDoc {
   originalId      Int      @id @default(autoincrement()) @map("original_id")
-  authorId        Int      @map("user_id")
-  user            User     @relation(fields: [authorId], references: [userId], onDelete: Cascade)
+  authorId        Int?      @map("user_id")
+  user            User?     @relation(fields: [authorId], references: [userId], onDelete: Cascade)
   originalContent String   @map("original_content")
   resumes         Resume[]
 

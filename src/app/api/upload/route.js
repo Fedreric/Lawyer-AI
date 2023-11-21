@@ -26,7 +26,21 @@ export async function POST(request) {
 
     //extract text
     const pdf = await PdfParse(buffer);
-    //save original pdf in database
+    //create resumen and logic if user not logged
+    if (userId === "0") {
+      //logica resume
+
+      //------->
+      console.log(pdf.text);
+      fs.unlinkSync(filePath);
+
+      return new Response(
+        JSON.stringify({
+          message: "PDF Resume!"
+        })
+      );
+    }
+    //if user logged
     const original = await prisma.originalDoc.create({
       data: {
         originalContent: pdf.text,
@@ -37,17 +51,14 @@ export async function POST(request) {
         }
       }
     });
-    //logica resume
-
-    //------->
 
     //save resume in database
-    await resume.create({ 
-        userId,
-        resumeContent: 'Resume content',
-        originalId: original.originalId,
-        fileName: file.name
-     });
+    await resume.create({
+      userId,
+      resumeContent: "Resume content",
+      originalId: original.originalId,
+      fileName: file.name
+    });
 
     fs.unlinkSync(filePath);
 
@@ -71,8 +82,7 @@ export async function POST(request) {
       },
       { status: 404 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
-//   finally{
-//     await prisma.$disconnect();
-//   }
 }
