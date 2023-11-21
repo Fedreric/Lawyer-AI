@@ -67,5 +67,7 @@ export async function POST(request) {
     );
   } catch (error) {
     return helpers.catchError(error);
+  } finally {
+    await prisma.$disconnect();
   }
 }

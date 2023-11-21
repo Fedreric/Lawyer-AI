@@ -7,8 +7,9 @@ export const user = {
         userId: Number(id)
       }
     });
+    await prisma.$disconnect();
   },
-  update: ({ name, email, password, id }) => {
+  update: async ({ name, email, password, id }) => {
     return prisma.user.update({
       where: {
         userId: Number(id)
@@ -19,12 +20,14 @@ export const user = {
         password
       }
     });
+    await prisma.$disconnect();
   },
-  delete:(id) => {
+  delete: async (id) => {
     return prisma.user.delete({
       where: {
         userId: Number(id)
       }
     });
+    await prisma.$disconnect();
   }
 };
