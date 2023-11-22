@@ -3,11 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
+import { toast } from "sonner";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object({
   name: yup
@@ -30,10 +29,9 @@ const schema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
 })
-
 const Register = () => {
-  const [response, setResponse] = useState();
-  const router =  useRouter();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -41,29 +39,24 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema)
   });
-  
+
   const onSubmit = handleSubmit(async (data) => {
-    const res =  await fetch('/api/user/register',{
-      method:'POST',
+    const res = await fetch("/api/user/register", {
+      method: "POST",
       body: JSON.stringify(data),
       headers: {
-        'Content-type': 'application/json'
-      },
-    })
-    console.log(data)
-    const resJSON = await res.json(); 
-    setResponse(resJSON)
-    if(res.status === 201){
-      Swal.fire({
-        title: "Registered!",
-        text: "please login",
-        icon: "success",
-        confirmButtonColor: "#F5A524",
+        "Content-type": "application/json"
+      }
+    });
+    if (res.status === 201) {
+      toast.success("successfully registered, please login", {
+        position: "top-right",
+        duration: 3000
       });
-      router.push('/login')
+      router.push("/login");
     }
   });
-  
+
   return (
     <div className='h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -106,7 +99,9 @@ const Register = () => {
               />
             </div>
             {errors.name && (
-              <span className='text-red-700 text-sm'>{errors.name.message}</span>
+              <span className='text-red-700 text-sm'>
+                {errors.name.message}
+              </span>
             )}
           </div>
 
@@ -125,14 +120,18 @@ const Register = () => {
                 autoComplete='text'
                 placeholder='johndoe@hotmail.com'
                 className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("email", { required: {
-                  value: true,
-                  message: "Email is required"
-                } })}
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Email is required"
+                  }
+                })}
               />
             </div>
             {errors.email && (
-              <span className='text-red-700 text-sm'>{errors.email.message}</span>
+              <span className='text-red-700 text-sm'>
+                {errors.email.message}
+              </span>
             )}
           </div>
 
@@ -153,14 +152,18 @@ const Register = () => {
                 autoComplete='current-password'
                 placeholder='Johndoe123'
                 className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("password", { required: {
-                  value: true,
-                  message: "Password is required"
-                } })}
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Password is required"
+                  }
+                })}
               />
             </div>
             {errors.password && (
-              <span className='text-red-700 text-sm'>{errors.password.message}</span>
+              <span className='text-red-700 text-sm'>
+                {errors.password.message}
+              </span>
             )}
           </div>
 
@@ -181,26 +184,20 @@ const Register = () => {
                 autoComplete='current-password'
                 placeholder='Johndoe123'
                 className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("confirmPassword", { required: {
-                  value: true,
-                  message: "Confirm password is required"
-                } })}
+                {...register("confirmPassword", {
+                  required: {
+                    value: true,
+                    message: "Confirm password is required"
+                  }
+                })}
               />
             </div>
             {errors.confirmPassword && (
-              <span className='text-red-700 text-sm'>{errors.confirmPassword.message}</span>
+              <span className='text-red-700 text-sm'>
+                {errors.confirmPassword.message}
+              </span>
             )}
           </div>
-            {/* <div>
-              {
-                response?.errors ? (
-                  response.errors.issues.map(issue => {
-                    <span className='text-red-700 text-sm'>{issue.message}</span>
-                    console.log(issue.message)
-                  })
-                ): null
-              }
-            </div> */}
           <div>
             <button
               type='submit'

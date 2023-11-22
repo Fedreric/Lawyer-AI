@@ -1,12 +1,16 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function UploadFile() {
   const [file, setFile] = useState(null);
-  const {data:session} = useSession();
-  const [id, setId] = useState('x');
-console.log(session)
+  const { data: session } = useSession();
+  const [id, setId] = useState(0);
+  useEffect(() => {
+    if(session){
+      setId(session.user.userId)
+    }
+  },[session]);
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
@@ -14,7 +18,7 @@ console.log(session)
     try {
       const data = new FormData();
       data.set("file", file);
-      data.append("userId", id );
+      data.append("userId", id);
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -34,7 +38,7 @@ console.log(session)
             type='file'
             name='file'
             onChange={(e) => setFile(e.target.files?.[0])}
-            accept=".pdf"
+            accept='.pdf'
           />
         </div>
         <div className='flex flex-col items-center p-24'>

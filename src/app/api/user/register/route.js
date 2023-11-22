@@ -8,15 +8,6 @@ export async function POST(request) {
   try {
     const { name, email, password, confirmPassword } = await request.json();
 
-    if(password !== confirmPassword){
-      return NextResponse.json(
-        {
-          message: 'Passwords do not match'
-        },
-        { status: 401 }
-      );
-    }
-
     const validation = registerValidation({ name, email, password });
 
     if (!validation.success) {
@@ -25,6 +16,15 @@ export async function POST(request) {
           errors: validation.error
         },
         { status: 400 }
+      );
+    }
+
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        {
+          message: "Passwords do not match"
+        },
+        { status: 401 }
       );
     }
 
@@ -54,19 +54,20 @@ export async function POST(request) {
       }
     });
 
-    const {password: _, ...user} = newUser
+    const { password: _, ...user } = newUser;
 
     return NextResponse.json(
       {
         message: "Created user",
-        user: user,
+        user: user
       },
       {
         status: 201
       }
     );
-
   } catch (error) {
     return helpers.catchError(error);
+  } finally {
+    await prisma.$disconnect();
   }
 }
