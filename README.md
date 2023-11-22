@@ -118,6 +118,11 @@ Prisma serves as an open-source database toolkit, providing an Object-Relational
   ```bash 
   cd Lawyer-AI
   yarn install
+  ``` <br>
+  
+  ```bash 
+  cd Lawyer-AI
+  npm install
   ``` 
 
 3. Configure the .env file
@@ -125,6 +130,20 @@ Prisma serves as an open-source database toolkit, providing an Object-Relational
   ```bash
   cp .env.example .env
   ```
+
+<br>
+  
+DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=public" <br>
+NEXTAUTH_URL="http://localhost:3000/" <br>
+NEXTAUTH_SECRET="GCDg7ffgPAjIh0+EFnqN7yvLhKkKWCGK08pfjn6wO6s="<br>
+
+Make sure to provide real values for [postgres], [PASSWORD], and DB.NAME in the DATABASE_URL configuration. Additionally, note that the value of NEXTAUTH_SECRET should be generated using the
+
+```bash
+openssl rand -base64 32
+``` 
+ command or a similar method.
+
 
 4. Set up the local database using docker-compose
 
@@ -143,7 +162,11 @@ Prisma serves as an open-source database toolkit, providing an Object-Relational
   ```bash
   yarn start
   ```
+<br>
 
+  ```bash
+  npm run dev
+  ```
 ---
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
