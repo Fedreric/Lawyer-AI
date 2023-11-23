@@ -138,7 +138,7 @@ DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=publ
 <br>
 NEXTAUTH_URL="http://localhost:3000/" 
 <br>
-NEXTAUTH_SECRET="GCDg7ffgPAjIh0+EFnqN7yvLhKkKWCGK08pfjn6wO6s="
+NEXTAUTH_SECRET="[SECRET]="
 <br>
 
 Make sure to provide real values for [postgres], [PASSWORD], and DB.NAME in the DATABASE_URL configuration. Additionally, note that the value of NEXTAUTH_SECRET should be generated using the
@@ -149,19 +149,14 @@ openssl rand -base64 32
  command or a similar method.
 
 
-4. Set up the local database using docker-compose
 
-  ```bash
-  docker-compose up
-  ```
-
-5. Run migrations with Prisma
+4. Run migrations with Prisma
 
   ```bash
   npx prisma migrate dev
   ```
 
-6. Start the API
+5. Start the API
 
   ```bash
   yarn start
@@ -199,13 +194,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 --- 
-## **8. Congrats **
+
+## **8. Congrats**
 
 We express our gratitude to the developers/tutors who guided us on this journey, providing advice and contributions in the knowledge of the implemented technologies. We appreciate the documentation provided by Next.js, Prisma, and PostgreSQL. Special thanks to the YouTube channels that allowed us to gain a broader perspective on how to achieve the final result. We are thankful for the institutions that provided training and space for us to implement the knowledge acquired.
 
 Thanks to GitHub for enabling us to publish our app, facilitating collaborative work and allowing future developers to enhance any weaknesses or strengths the current application may have. We appreciate the space provided on Discord by Global-Learning and Not-Nini, which allowed us to carry out this new project. Finally, we extend our gratitude to all team members for their participation and dedicated time in the development and implementation of all technologies.
 
-## **9. Team Members:
+## **9. Team Members:**
 
 --- 
 
