@@ -1,10 +1,8 @@
-import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
-import path from "path";
 import PdfParse from "pdf-parse";
-import fs from "fs";
 import { resume } from "../services/resume";
 import prisma from "@/libs/db";
+import { resumeContract } from "../services/cohereAI/resumeContract";
 
 export async function POST(request) {
   try {
@@ -21,22 +19,23 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     //save pdf in local
-    const filePath = path.join(process.cwd(), "public", file.name);
-    writeFile(filePath, buffer);
+    // const filePath = path.join(process.cwd(), "public", file.name);
+    // writeFile(filePath, buffer);
 
     //extract text
     const pdf = await PdfParse(buffer);
-    //create resumen and logic if user not logged
-    if (userId === "0") {
-      //logica resume
 
-      //------->
-      console.log(pdf.text);
-      fs.unlinkSync(filePath);
+    //logica resume
+    const response = await resumeContract(pdf);
+    //------->
+    if (userId === "0") {
+      // console.log(pdf.text);
+      // fs.unlinkSync(filePath);
 
       return new Response(
         JSON.stringify({
-          message: "PDF Resume!"
+          message: "PDF Resume!",
+          resume: response.generations[0].text
         })
       );
     }
@@ -55,16 +54,17 @@ export async function POST(request) {
     //save resume in database
     await resume.create({
       userId,
-      resumeContent: "Resume content",
+      resumeContent: response.generations[0].text,
       originalId: original.originalId,
       fileName: file.name
     });
 
-    fs.unlinkSync(filePath);
+    // fs.unlinkSync(filePath);
 
     return new Response(
       JSON.stringify({
-        message: "PDF Resume!"
+        message: "PDF Resume!",
+        resume: response.generations[0].text
       })
     );
   } catch (error) {
