@@ -11,6 +11,7 @@ export default function UploadFile() {
       setId(session.user.userId)
     }
   },[session]);
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
@@ -25,6 +26,8 @@ export default function UploadFile() {
         body: data
       });
       if (!res.ok) throw new Error(await res.text());
+      const resJson = await res.json();
+      console.log(resJson.resume)
     } catch (error) {
       console.log(error);
     }
