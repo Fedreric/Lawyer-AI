@@ -21,13 +21,14 @@ const schema = yup.object({
   password: yup
     .string()
     .min(7, "Password must be at least 7 characters")
+    .matches(/[A-Z]/, "Password must have at least one uppercase letter")
+    .matches(/\d/, "Password must have at least one number")
     .required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required")
-});
-
+    .required("Confirm Password is required"),
+})
 const Register = () => {
   const router = useRouter();
 
