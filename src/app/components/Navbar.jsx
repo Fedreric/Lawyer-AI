@@ -44,6 +44,11 @@ const Navbar = () => {
                 ) : (
                   <Logout></Logout>
                 )}
+                 <li className="w-auto">
+                <Link href='/register' className='hover:text-text-custom-color-Details'>
+                  Register
+                  </Link>
+                  </li>
               </ul>
             </details>
           </li>
