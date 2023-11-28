@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import CustomInput from '../components/CustomInput.jsx';
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -74,139 +75,22 @@ const Register = () => {
       </div>
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form className='space-y-4 md:space-y-2' onSubmit={onSubmit}>
-          <div>
-            <label
-              htmlFor='text'
-              className='block text-sm font-medium leading-6 text-custom-color-dark'
-            >
-              Name
-            </label>
-            <div className='mt-2'>
-              <input
-                id='user'
-                name='name'
-                type='text'
-                autoComplete='text'
-                placeholder='John Doe'
-                className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("name", {
-                  required: {
-                    value: true,
-                    message: "Name is required"
-                  }
-                })}
-              />
-            </div>
-            {errors.name && (
-              <span className='text-red-700 text-sm'>
-                {errors.name.message}
-              </span>
-            )}
-          </div>
+      <form className='space-y-4 md:space-y-2' onSubmit={onSubmit}>
+  <CustomInput id='user' name='name' type='text' placeholder='Name' register={register} error={errors.name} />
+  <CustomInput id='email' name='email' type='email' placeholder='E-mail' register={register} error={errors.email} />
+  <CustomInput id='password' name='password' type='password' placeholder='Password' register={register} error={errors.password} />
+  <CustomInput id='confirmPassword' name='confirmPassword' type='password' placeholder='Confirm Password' register={register} error={errors.confirmPassword} />
 
-          <div>
-            <label
-              htmlFor='text'
-              className='block text-sm font-medium leading-6 text-custom-color-dark'
-            >
-              E-mail
-            </label>
-            <div className='mt-2'>
-              <input
-                id='email'
-                name='email'
-                type='email'
-                autoComplete='text'
-                placeholder='johndoe@hotmail.com'
-                className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("email", {
-                  required: {
-                    value: true,
-                    message: "Email is required"
-                  }
-                })}
-              />
-            </div>
-            {errors.email && (
-              <span className='text-red-700 text-sm'>
-                {errors.email.message}
-              </span>
-            )}
-          </div>
+  <div>
+    <button
+      type='submit'
+      className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+    >
+      REGISTER
+    </button>
+  </div>
+</form>
 
-          <div>
-            <div className='flex items-center justify-between'>
-              <label
-                htmlFor='password'
-                className='block text-sm font-medium leading-6 text-custom-color-dark'
-              >
-                Password
-              </label>
-            </div>
-            <div className='mt-2'>
-              <input
-                id='password'
-                name='password'
-                type='password'
-                autoComplete='current-password'
-                placeholder='Johndoe123'
-                className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("password", {
-                  required: {
-                    value: true,
-                    message: "Password is required"
-                  }
-                })}
-              />
-            </div>
-            {errors.password && (
-              <span className='text-red-700 text-sm'>
-                {errors.password.message}
-              </span>
-            )}
-          </div>
-
-          <div>
-            <div className='flex items-center justify-between'>
-              <label
-                htmlFor='confirmPassword'
-                className='block text-sm font-medium leading-6 text-custom-color-dark'
-              >
-                Confirm Password
-              </label>
-            </div>
-            <div className='mt-2'>
-              <input
-                id='confirmPassword'
-                name='confirmPassword'
-                type='password'
-                autoComplete='current-password'
-                placeholder='Johndoe123'
-                className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                {...register("confirmPassword", {
-                  required: {
-                    value: true,
-                    message: "Confirm password is required"
-                  }
-                })}
-              />
-            </div>
-            {errors.confirmPassword && (
-              <span className='text-red-700 text-sm'>
-                {errors.confirmPassword.message}
-              </span>
-            )}
-          </div>
-          <div>
-            <button
-              type='submit'
-              className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-            >
-              REGISTER
-            </button>
-          </div>
-        </form>
 
         <p className='mt-1 text-center text-sm text-custom-color-dark'>
           Did you have an account?{" "}
