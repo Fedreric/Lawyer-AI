@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
+
 export default function UploadFile() {
   const [file, setFile] = useState(null);
   const { data: session } = useSession();
@@ -26,8 +27,10 @@ export default function UploadFile() {
         body: data
       });
       if (!res.ok) throw new Error(await res.text());
-      const resJson = await res.json();
+      const resJson = await res.json(); //Esto tengo que guardar <-----
       console.log(resJson.resume)
+      // Redireccionando al Result Resume (Aqui necesito instansear el resJson.resumen con el estado global de zustand y leerlo desde la page result resume y bloquear el text area para que solo muestre el texto)
+      router.push("/ResultResume");
     } catch (error) {
       console.log(error);
     }
