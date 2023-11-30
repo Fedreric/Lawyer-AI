@@ -22,7 +22,6 @@ Estamos transformando la forma en que los profesionales legales revisan y mejora
 Las tecnologias utilizadas incluyen Next.JS, Prisma para las interacciones con la base de datos y bcrypt para el cifrado.
 
 ---
-
 ## 2. Arquitectura del Sistema
 
 1. arquitectura del sistema
@@ -93,5 +92,3 @@ Agradecemos a los integrantes por su participacion y tiempo dedicado al desarrol
 
 ## Integrantes:
  https://github.com/canogerman <br>- https://github.com/Fedreric <br>- https://github.com/AgustinCNz -  
-
-

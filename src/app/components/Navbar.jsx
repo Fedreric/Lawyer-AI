@@ -58,3 +58,8 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+{/* <li className="w-auto">
+<Link href={"/register"} className='hover:text-text-custom-color-Details'>
+  Register
+</Link></li> */}
