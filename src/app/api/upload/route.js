@@ -18,9 +18,6 @@ export async function POST(request) {
     //Convert data in buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    //save pdf in local
-    // const filePath = path.join(process.cwd(), "public", file.name);
-    // writeFile(filePath, buffer);
 
     //extract text
     const pdf = await PdfParse(buffer);
@@ -29,9 +26,6 @@ export async function POST(request) {
     const response = await resumeContract(pdf);
     //------->
     if (userId === "0") {
-      // console.log(pdf.text);
-      // fs.unlinkSync(filePath);
-
       return new Response(
         JSON.stringify({
           message: "PDF Resume!",
@@ -59,12 +53,11 @@ export async function POST(request) {
       fileName: file.name
     });
 
-    // fs.unlinkSync(filePath);
-
     return new Response(
       JSON.stringify({
         message: "PDF Resume!",
-        resume: response.generations[0].text
+        text: response.generations[0].text,
+        fileName: file.name
       })
     );
   } catch (error) {
