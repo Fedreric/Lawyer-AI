@@ -1,12 +1,35 @@
 // pages/ResultResume.js
-"use client"
-import React from 'react';
-import { back } from '@/helpers/icons';
-import Link from 'next/link';
-import useStore from '@/store/useTextarea';
+"use client";
+import React from "react";
+import { back } from "@/helpers/icons";
+import Link from "next/link";
+import useStore from "@/store/useTextarea";
 
 const ResultResume = () => {
   const resume = useStore((state) => state.resume);
+  const data = {
+    text: resume.text,
+    fileName: resume.fileName
+  };
+  const download = async () => {
+    const res = await fetch("/api/download", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json"
+      }
+    });
+
+    if (!res.ok) throw new Error("Failed");
+
+    const url = `/${resume.fileName}`;
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `resume-${resume.fileName}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <main className='flex h-screen min-h-full flex-col items-center p-4 sm:p-24 bg-bg-custom-color shadow-md'>
@@ -20,12 +43,15 @@ const ResultResume = () => {
           rows={8}
           className=' w-full h-[80%] text-white bg-custom-color-dark p-2'
           placeholder='Your contract resume text here'
-          value={resume}
+          value={resume.text}
           readOnly
         ></textarea>
         <section className='flex flex-col items-center md:flex-row md:justify-between gap-2'>
           <div className='flex justify-center bg-custom-color-dark w-full rounded-sm'>
-            <button className='w-full bg-custom-color-dark text-center text-white px-4 py-2 rounded hover:bg-slate-900'>
+            <button
+              onClick={download}
+              className='w-full bg-custom-color-dark text-center text-white px-4 py-2 rounded hover:bg-slate-900'
+            >
               DOWNLOAD PDF
             </button>
           </div>
@@ -44,7 +70,6 @@ const ResultResume = () => {
 };
 
 export default ResultResume;
-
 
 // "use client";
 // import { back } from "@/helpers/icons";
@@ -93,7 +118,6 @@ export default ResultResume;
 // };
 
 // export default ResultResume;
-
 
 // import Link from "next/link";
 // import useStore from "@/store/useTextarea";
