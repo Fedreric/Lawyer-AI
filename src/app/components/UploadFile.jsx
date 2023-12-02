@@ -35,6 +35,7 @@ export default function UploadFile() {
       if (res.ok) {
         toast.success('Resume complete!', { id: toastId, duration: 2000 });
       } else {
+        toast.error('Error, please try again...', { id: toastId, duration: 2000 })
         throw new Error('Error, please try again...');
       }
       const resJson = await res.json();
