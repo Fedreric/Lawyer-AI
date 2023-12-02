@@ -1,5 +1,3 @@
-¡Claro! Aquí está el texto corregido:
-
 # LAWYER AI
 
 ## **Tabla de Contenidos**
@@ -24,6 +22,7 @@ Las tecnologías utilizadas incluyen Next.JS, Prisma para las interacciones con 
 ## **2. Arquitectura del Sistema y Estructura**
 
 1. Arquitectura del sistema
+
 El usuario envía el archivo pdf al servicio Frontend - recepcionamos desde el Frontend el texto - enviamos el texto y datos del usuario al Backend - se resume el texto ingresado en la base de datos y se envía de nuevo al Backend la lista de resumen y los datos requeridos del usuario.
 
 ![Arquitectura del Sistema](src/assets/architecture.png)
@@ -31,6 +30,12 @@ El usuario envía el archivo pdf al servicio Frontend - recepcionamos desde el F
 2. Estructura de la API
 
 ![Estructura](src/assets/infrastructure.png)
+
+3. Base de datos
+
+Se utilizó PostgreSQL en función del siguiente diagrama relacional:
+
+![Diagram](src/assets/BD_Diagrams.png)
 
 ---
 
@@ -69,9 +74,6 @@ cp .env.example .env
 
 ```bash
 DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=public"
-```   
-
-```bash
 NEXTAUTH_URL="http://localhost:3000/"
 ``` 
 
