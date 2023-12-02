@@ -14,8 +14,24 @@ export const resume = {
             originalId
           }
         },
-        name: "resume_" + fileName,
+        name: "resume-" + fileName,
         resumeContent
+      }
+    });
+    await prisma.$disconnect();
+  },
+  findResumeById: async (id) => {
+    return prisma.resume.findMany({
+      where:{
+        authorId: Number(id)
+      }
+    });
+    await prisma.$disconnect();
+  },
+  delete: async (id) => {
+    return prisma.resume.delete({
+      where: {
+        resumeId: Number(id)
       }
     });
     await prisma.$disconnect();
