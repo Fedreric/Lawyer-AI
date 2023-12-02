@@ -1,42 +1,49 @@
 "use client";
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import CustomInput from "@/app/components/CustomInput";
+import { useEffect } from "react";
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Put a valid email@example.com")
+    .required("The email is required")
+    .matches(/^.+@.+\..+$/, "Email must be valid")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("The password is required")
+    .min(7, "Password must be at least 7 characters")
+    .required("Password is required")
+});
 
 const Login = () => {
   const router = useRouter();
-  const [error, setError] = useState();
+  const { data: session } = useSession();
 
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Put a valid email@example.com")
-      .required("The email is required")
-      .matches(/^.+@.+\..+$/, "Email must be valid")
-      .required("Email is required"),
-    password: yup
-      .string()
-      .required("The password is required")
-      .min(7, "Password must be at least 7 characters")
-      .required("Password is required")
-  });
+  useEffect(() => {
+    if (session) router.push("/");
+  }, [router,session]);
 
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    register
   } = useForm({
     resolver: yupResolver(schema)
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    const toastId = toast.loading("Log in...", { duration: 60000 });
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -45,15 +52,15 @@ const Login = () => {
 
     if (res.error) {
       toast.error(res.error, {
+        id: toastId,
         duration: 3000
       });
     } else {
       toast.success("Welcome to LawyerAI", {
-        position: "top-right",
+        id: toastId,
         duration: 1500
       });
       router.push("/");
-      router.refresh();
     }
   });
 
@@ -76,67 +83,27 @@ const Login = () => {
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
           <form className='space-y-4' onSubmit={onSubmit}>
             <div>
-              <label
-                htmlFor='text'
-                className='block text-sm font-medium leading-6 text-custom-color-dark'
-              >
-                E-mail
-              </label>
-              <div className='mt-2'>
-                <Controller
-                  name='email'
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      id='email'
-                      name='email'
-                      type='email'
-                      autoComplete='text'
-                      placeholder='johndoe@hotmail.com'
-                      className=' bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                      {...field}
-                    />
-                  )}
-                />
-              </div>
-              {errors.email && (
-                <span className='text-red-700 text-sm'>
-                  {errors.email.message}
-                </span>
-              )}
+              <CustomInput
+                id='email'
+                name='email'
+                type='email'
+                placeholder='E-mail'
+                control={control}
+                error={errors.email}
+                register={register}
+              />
             </div>
 
             <div>
-              <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium leading-6 text-custom-color-dark'
-                >
-                  Password
-                </label>
-              </div>
-              <div className='mt-2'>
-                <Controller
-                  name='password'
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      id='password'
-                      name='password'
-                      type='password'
-                      autoComplete='current-password'
-                      placeholder='Johndoe123'
-                      className='bg-text-custom-color-white block w-full rounded-md border-0 py-1.5 px-2 text-custom-color-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-custom-color-dark sm:text-sm sm:leading-6'
-                      {...field}
-                    />
-                  )}
-                />
-              </div>
-              {errors.password && (
-                <span className='text-red-700 text-sm'>
-                  {errors.password.message}
-                </span>
-              )}
+              <CustomInput
+                id='password'
+                name='password'
+                type='password'
+                placeholder='Password'
+                control={control}
+                error={errors.password}
+                register={register}
+              />
             </div>
 
             <div>

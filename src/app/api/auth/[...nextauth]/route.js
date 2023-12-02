@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const url = process.env.NEXTAUTH_URL
 
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -20,7 +21,7 @@ export const authOptions = {
           }),
           headers: { "Content-type": "application/json" }
         });
-
+       
         if (!res.ok) throw new Error("Email or password invalid");
 
         const user = await res.json();

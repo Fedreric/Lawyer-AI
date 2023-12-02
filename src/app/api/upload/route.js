@@ -1,10 +1,10 @@
-import { writeFile } from "fs/promises";
 import { NextResponse } from "next/server";
-import path from "path";
 import PdfParse from "pdf-parse";
-import fs from "fs";
 import { resume } from "../services/resume";
 import prisma from "@/libs/db";
+import { resumeContract } from "../services/openAI/resumeContract";
+export const maxDuration = 10; // This function can run for a maximum of 5 seconds
+export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
   try {
@@ -20,23 +20,18 @@ export async function POST(request) {
     //Convert data in buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    //save pdf in local
-    const filePath = path.join(process.cwd(), "public", file.name);
-    writeFile(filePath, buffer);
 
     //extract text
     const pdf = await PdfParse(buffer);
-    //create resumen and logic if user not logged
+
+    //logica resume
+    const response = await resumeContract(pdf);
+    //------->
     if (userId === "0") {
-      //logica resume
-
-      //------->
-      console.log(pdf.text);
-      fs.unlinkSync(filePath);
-
       return new Response(
         JSON.stringify({
-          message: "PDF Resume!"
+          message: "PDF Resume!",
+          resume: response.choices[0].message.content
         })
       );
     }
@@ -55,16 +50,16 @@ export async function POST(request) {
     //save resume in database
     await resume.create({
       userId,
-      resumeContent: "Resume content",
+      resumeContent: response.choices[0].message.content,
       originalId: original.originalId,
       fileName: file.name
     });
 
-    fs.unlinkSync(filePath);
-
     return new Response(
       JSON.stringify({
-        message: "PDF Resume!"
+        message: "PDF Resume!",
+        text: response.choices[0].message.content,
+        name: file.name
       })
     );
   } catch (error) {
