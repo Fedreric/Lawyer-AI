@@ -51,7 +51,6 @@ const Register = () => {
     });
     if (res.status === 201) {
       toast.success("successfully registered, please login", {
-        position: "top-right",
         duration: 3000,
       });
       router.push("/login");
