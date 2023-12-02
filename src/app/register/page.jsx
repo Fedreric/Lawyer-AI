@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const schema = yup.object({
   name: yup
@@ -32,6 +34,11 @@ const schema = yup.object({
 });
 const Register = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) router.push("/");
+  }, [router,session]);
 
   const {
     register,
