@@ -28,7 +28,7 @@ const schema = yup.object({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
+    .required("Confirm Password is required")
 });
 const Register = () => {
   const router = useRouter();
@@ -36,93 +36,95 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    const toastId = toast.loading("Create account...", { duration: 60000 });
     const res = await fetch("/api/user/register", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-type": "application/json",
-      },
+        "Content-type": "application/json"
+      }
     });
     if (res.status === 201) {
       toast.success("successfully registered, please login", {
-        duration: 3000,
+        id: toastId,
+        duration: 3000
       });
       router.push("/login");
     }
   });
 
   return (
-    <div className="h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <picture className="lg:hidden">
+    <div className='h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
+      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+        <picture className='lg:hidden'>
           <Image
             src={logo}
-            alt="Logo"
+            alt='Logo'
             height={"150"}
-            className="mx-auto animate-spin"
+            className='mx-auto animate-spin'
           />
         </picture>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-custom-color-dark">
+        <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-custom-color-dark'>
           Create your account!
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-4 md:space-y-2" onSubmit={onSubmit}>
+      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        <form className='space-y-4 md:space-y-2' onSubmit={onSubmit}>
           <CustomInput
-            id="user"
-            name="name"
-            type="text"
-            placeholder="Name"
+            id='user'
+            name='name'
+            type='text'
+            placeholder='Name'
             register={register}
             error={errors.name}
           />
           <CustomInput
-            id="email"
-            name="email"
-            type="email"
-            placeholder="E-mail"
+            id='email'
+            name='email'
+            type='email'
+            placeholder='E-mail'
             register={register}
             error={errors.email}
           />
           <CustomInput
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
+            id='password'
+            name='password'
+            type='password'
+            placeholder='Password'
             register={register}
             error={errors.password}
           />
           <CustomInput
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
+            id='confirmPassword'
+            name='confirmPassword'
+            type='password'
+            placeholder='Confirm Password'
             register={register}
             error={errors.confirmPassword}
           />
 
           <div>
             <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              type='submit'
+              className='flex w-full justify-center rounded-md bg-custom-color-dark px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             >
               REGISTER
             </button>
           </div>
         </form>
 
-        <p className="mt-1 text-center text-sm text-custom-color-dark">
+        <p className='mt-1 text-center text-sm text-custom-color-dark'>
           Did you have an account?{" "}
           <Link
-            href="/login"
-            className="font-semibold leading-6 underline text-blue-700 hover:text-blue-500"
+            href='/login'
+            className='font-semibold leading-6 underline text-blue-700 hover:text-blue-500'
           >
             Login
           </Link>
