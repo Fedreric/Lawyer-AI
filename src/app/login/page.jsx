@@ -53,7 +53,6 @@ const Login = () => {
         duration: 1500,
       });
       router.push("/");
-      router.refresh();
     }
   });
 
