@@ -49,7 +49,6 @@ const Login = () => {
       });
     } else {
       toast.success("Welcome to LawyerAI", {
-        position: "top-right",
         duration: 1500,
       });
       router.push("/");
