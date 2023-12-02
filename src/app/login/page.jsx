@@ -2,13 +2,14 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import CustomInput from "@/app/components/CustomInput";
+import { useEffect } from "react";
 
 const schema = yup.object().shape({
   email: yup
@@ -26,6 +27,11 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) router.push("/");
+  }, [router,session]);
 
   const {
     control,
