@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'  // Importa useRouter
 import React, { useEffect, useState } from "react";
 import useStore from "@/store/useTextarea";
+import { toast } from "sonner";
 
 export default function UploadFile() {
   const [file, setFile] = useState(null);
@@ -17,13 +18,13 @@ export default function UploadFile() {
     }
   }, [session]);
 
-  const setResume = useStore((state) => state.setResume);
+  const {setResume, setResumeList} = useStore();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
-
     try {
+      const toastId = toast.loading('Create resume...',{duration: 60000});
       const data = new FormData();
       data.set("file", file);
       data.append("userId", id);
@@ -31,16 +32,16 @@ export default function UploadFile() {
         method: "POST",
         body: data,
       });
-
-      if (!res.ok) throw new Error(await res.text());
-
+      if (res.ok) {
+        toast.success('Carga exitosa!', { id: toastId, duration: 2000 });
+      } else {
+        throw new Error('Error, please try again...');
+      }
       const resJson = await res.json();
       setResume(resJson);
-
       // Utiliza router.push para redirigir a la página ResultResume
       router.push("/ResultResume");
-
-      console.log(resJson.resume);
+      setResumeList(session.user.userId)
     } catch (error) {
       console.error(error);
     }
