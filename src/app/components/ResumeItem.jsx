@@ -26,7 +26,8 @@ export default function ResumeItem({ resume }) {
   }
 
   const deleteRes = () =>{
-    toast.warning('Delete: ' + resume.name + '?', {
+    toast.warning('Delete: ', {
+      description:  resume.name,
       action: {
         label: 'Yes',
         onClick: async () => {
@@ -39,6 +40,9 @@ export default function ResumeItem({ resume }) {
           } 
         }
       },
+      cancel:{
+        label: 'No'
+      }
     })
   }
 

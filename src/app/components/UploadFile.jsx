@@ -33,7 +33,7 @@ export default function UploadFile() {
         body: data,
       });
       if (res.ok) {
-        toast.success('Carga exitosa!', { id: toastId, duration: 2000 });
+        toast.success('Resume complete!', { id: toastId, duration: 2000 });
       } else {
         throw new Error('Error, please try again...');
       }
