@@ -1,115 +1,118 @@
 # LAWYER AI
 
-## **Tabla de Contenidos**
+## **Table of Contents**
 
-1. [Introducción](#1-introducción)
-2. [Arquitectura del Sistema y Estructura](#2-arquitectura-del-sistema-y-estructura)
-3. [Funcionalidades](#3-funcionalidades)
-4. [Empezando](#4-empezando)
-5. [Mejoras Futuras](#5-mejoras-futuras)
-6. [Agradecimientos](#6-agradecimientos)
-
----
-
-## **1. Introducción**
-
-La API de LAWYER-AI está desarrollada para poder controlar y administrar los contratos actuales de una manera más sencilla. Le permitimos al usuario corriente que pueda acceder de manera rápida a la APP LAWYER AI e intentar resumir un contrato con nuestra más reciente tecnología desarrollada. También manejamos la autenticación de usuarios. Obtienes datos de las fechas de tus resúmenes que generaste y podrás acceder a ellos de manera sencilla y rápida.
-Estamos transformando la forma en que los profesionales legales revisan y mejoran contratos.
-Las tecnologías utilizadas incluyen Next.JS, Prisma para las interacciones con la base de datos y bcrypt para el cifrado.
+1. [Introduction](#1-introduction)
+2. [System Architecture and Structure](#2-system-architecture-and-structure)
+3. [Features](#3-features)
+4. [Getting Started](#4-getting-started)
+5. [Future Improvements](#5-future-improvements)
+6. [Acknowledgments](#6-acknowledgments)
 
 ---
 
-## **2. Arquitectura del Sistema y Estructura**
+## **1. Introduction**
 
-1. Arquitectura del sistema
+The LAWYER-AI API is developed to control and manage current contracts in a simpler way. We enable the average user to quickly access the LAWYER AI app and attempt to summarize a contract using our latest developed technology. We also handle user authentication. You get data about the dates of your generated summaries and can access them easily and quickly. We are transforming the way legal professionals review and enhance contracts. Technologies used include Next.JS, Prisma for interactions with the database, and bcrypt for encryption.
 
-El usuario envía el archivo pdf al servicio Frontend - recepcionamos desde el Frontend el texto - enviamos el texto y datos del usuario al Backend - se resume el texto ingresado en la base de datos y se envía de nuevo al Backend la lista de resumen y los datos requeridos del usuario.
+---
 
-![Arquitectura del Sistema](src/assets/architecture.png)
+## **2. System Architecture and Structure**
 
-2. Estructura de la API
+1. System Architecture
+   - The user sends the PDF file to the Frontend service.
+   - We receive the text from the Frontend.
+   - The text and user data are sent to the Backend.
+   - The entered text is summarized in the database, and the list of summaries and required user data is sent back to the Backend.
 
-![Estructura](src/assets/infrastructure.png)
+![System Architecture](src/assets/architecture.png)
 
-3. Base de datos
+2. API Structure
 
-Se utilizó PostgreSQL en función del siguiente diagrama relacional:
+![Structure](src/assets/infrastructure.png)
+
+3. Database
+
+PostgreSQL was used based on the following relational diagram:
 
 ![Diagram](src/assets/BD_Diagrams.png)
 
 ---
 
-## **3. Funcionalidades**
+## **3. Features**
 
-1. Al momento de acceder al landing te encontrarás con un navbar el cual te puede llevar a loguearte.
-2. Tendrás una breve publicidad de quienes somos y de cómo obtener tu primera cuenta o acceder como usuario ya registrado en el margen izquierdo de la pantalla.
-3. En el centro de la pantalla podrás observar un botón que te permite cargar tu archivo de tipo .PDF para poder empezar a probar la aplicación.
-4. En el centro de la pantalla podrás observar un botón que te permite enviar tu archivo a nuestra base de datos para poder realizar tu resumen inteligente.
-5. En la sección de registro, encontrarás los campos necesarios para crear un usuario válido y poder loguearte con facilidad.
-6. En la sección de inicio de sesión, encontrarás los campos necesarios para crear un usuario válido y poder loguearte con facilidad.
-7. En la sección de resumen, encontrarás el mismo campo de nuestro landing pero con un plus, en el cual nuestra publicidad principal se transforma en un historial accesible de todos tus resúmenes.
+1. When accessing the landing page, you will find a navbar that can lead you to log in.
+2. There is a brief advertisement about who we are and how to get your first account or access as a registered user on the left side of the screen.
+3. In the center of the screen, you can see a button that allows you to upload your .PDF file to start testing the application.
+4. In the center of the screen, you can see a button that allows you to send your file to our database to perform your intelligent summary.
+5. In the registration section, you will find the necessary fields to create a valid user and log in easily.
+6. In the login section, you will find the necessary fields to create a valid user and log in easily.
+7. In the summary section, you will find the same field as our landing page but with an additional feature. The main advertisement transforms into an accessible history of all your summaries.
 
 ---
 
-## **4. Empezando**
+## **4. Getting Started**
 
-1. Clona el repositorio
+1. Clone the repository
 
 ```bash 
 git clone git@github.com:Fedreric/Lawyer-AI.git
 ```
 
-2. Instala las dependencias
+2. Install dependencies
 
 ```bash 
 cd Lawyer-AI
 npm install
 ```
 
-3. Configura el archivo .env
+3. Configure the .env file
 
 ```bash
 cp .env.example .env
 ```
 
 ```bash
-DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=public"
-NEXTAUTH_URL="http://localhost:3000/"
-``` 
-
-```bash
 $ openssl rand -base64 32
-# Con esto creamos código random para usuarios de Linux / ejemplo [NEXTAUTH_SECRET="tu-código-secreto"]
+# This creates random code for Linux users / example [NEXTAUTH_SECRET="your-secret-code"]
 ```
 
-4. Configura la base de datos local mediante Prisma
+Configure the .env file as follows:
+
+```bash
+DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=public"
+NEXTAUTH_URL="http://localhost:3000/"
+NEXTAUTH_SECRET="your-secret-code"
+``` 
+
+4. Configure the local database using Prisma
 
 ```bash 
 npx prisma migrate dev
 ```
 
-## **5. Mejoras Futuras**
+## **5. Future Improvements**
 
-- Incorporar estilos más amigables al público
-- Adición de pruebas unitarias para cada módulo
-- Implementación de lectura de archivos en formato WORD.
-- Implementar una demostración en vivo de la API mediante la aplicación Railways
+- Incorporate user-friendly styles
+- Add unit tests for each module
+- Implement reading of WORD file formats.
+- Implement a live demonstration of the API using the Railways application
 
 ---
 
-## **6. Agradecimientos**
+## **6. Acknowledgments**
 
-Agradecemos a los desarrolladores/tutores que nos guiaron en este camino para poder construir esta app mediante sus consejos y contribuciones en conocimientos de las tecnologías implementadas.<br>
-Agradecemos a la documentación facilitada por Next.js<br>
-Agradecemos a la documentación facilitada por Prisma<br>
-Agradecemos a la documentación facilitada por PostgreSQL<br>
-Agradecemos a los canales de Youtube que nos permitieron comprender desde un punto de vista más amplio el cómo llegar al resultado final<br>
-Agradecemos a las instituciones que nos capacitaron y nos dieron el espacio para poder implementar los conocimientos brindados.<br>
-Agradecemos a GitHub que nos permite publicar nuestra APP para facilitar nuestro trabajo colaborativo y a futuros desarrolladores el mejoramiento de cualquier debilidad o fortaleza que posea la aplicación actualmente.<br>
-Agradecemos el espacio brindado en Discord por Global-Learning y Not-Nini que nos permitieron llevar a cabo este nuevo proyecto.<br>
-Agradecemos a los integrantes por su participación y tiempo dedicado al desarrollo e implementación de todas las tecnologías.<br>
+We appreciate the developers/tutors who guided us on this journey to build this app through their advice and contributions to the knowledge of the implemented technologies.<br>
+We thank the documentation provided by Next.js.<br>
+We thank the documentation provided by Prisma.<br>
+We thank the documentation provided by PostgreSQL.<br>
+We thank the YouTube channels that helped us understand from a broader perspective how to reach the final result.<br>
+We appreciate the institutions that trained us and provided the space to implement the knowledge provided.<br>
+We thank GitHub for allowing us to publish our APP to facilitate our collaborative work and future developers to improve any weaknesses or strengths the application currently has.<br>
+We appreciate the space provided on Discord by Global-Learning and Not-Nini, allowing us to carry out this new project.<br>
+We thank the team members for their participation and time dedicated to the development and implementation of all technologies.<br>
 
-## **Integrantes:**
-- https://github.com/canogerman <br>
-- https://github.com/Fedreric <br>
-- https://github.com/AgustinCNz <br>
+## **Team Members:**
+- [https://github.com/canogerman](https://github.com/canogerman)
+- [https://github.com/Fedreric](https://github.com/Fedreric)
+- [https://github.com/AgustinCNz](https://github.com/AgustinCNz)
