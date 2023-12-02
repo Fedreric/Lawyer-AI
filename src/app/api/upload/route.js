@@ -3,7 +3,7 @@ import PdfParse from "pdf-parse";
 import { resume } from "../services/resume";
 import prisma from "@/libs/db";
 import { resumeContract } from "../services/cohereAI/resumeContract";
-export const maxDuration = 60; // This function can run for a maximum of 5 seconds
+export const maxDuration = 10; // This function can run for a maximum of 5 seconds
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
