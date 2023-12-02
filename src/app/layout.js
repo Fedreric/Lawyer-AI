@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
           <section className='flex flex-col md:flex-row'>
             <LateralLayout></LateralLayout>
             <div className='w-full md:order-2'>{children}</div>
-            <Toaster />
+            <Toaster closeButton richColors/>
           </section>
         </SessionAuthProvider>
       </body>
