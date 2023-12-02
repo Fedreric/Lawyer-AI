@@ -57,7 +57,7 @@ export async function POST(request) {
       JSON.stringify({
         message: "PDF Resume!",
         text: response.generations[0].text,
-        fileName: file.name
+        name: file.name
       })
     );
   } catch (error) {
