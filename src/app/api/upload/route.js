@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import PdfParse from "pdf-parse";
 import { resume } from "../services/resume";
 import prisma from "@/libs/db";
-import { resumeContract } from "../services/cohereAI/resumeContract";
+import { resumeContract } from "../services/openAI/resumeContract";
 export const maxDuration = 10; // This function can run for a maximum of 5 seconds
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +31,7 @@ export async function POST(request) {
       return new Response(
         JSON.stringify({
           message: "PDF Resume!",
-          resume: response.generations[0].text
+          resume: response.choices[0].message.content
         })
       );
     }
@@ -50,7 +50,7 @@ export async function POST(request) {
     //save resume in database
     await resume.create({
       userId,
-      resumeContent: response.generations[0].text,
+      resumeContent: response.choices[0].message.content,
       originalId: original.originalId,
       fileName: file.name
     });
@@ -58,7 +58,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         message: "PDF Resume!",
-        text: response.generations[0].text,
+        text: response.choices[0].message.content,
         name: file.name
       })
     );
