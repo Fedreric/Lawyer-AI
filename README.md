@@ -69,7 +69,7 @@ npm install
 3. Configure the .env file
 
 ```bash
-cp .env.example .env
+cp .env
 ```
 
 ```bash
@@ -80,9 +80,11 @@ $ openssl rand -base64 32
 Configure the .env file as follows:
 
 ```bash
-DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5433]/DB.NAME?schema=public"
+DATABASE_URL="postgresql://[postgres]:[PASSWORD]@[host:5432]/DB.NAME?schema=public"
 NEXTAUTH_URL="http://localhost:3000/"
-NEXTAUTH_SECRET="your-secret-code"
+NEXTAUTH_SECRET="your-nextauth-secret"
+SECRET_JWT="your-JWT-secret"
+OPENAI_API_KEY="your-apikey-openai"
 ``` 
 
 4. Configure the local database using Prisma
