@@ -3,8 +3,6 @@ import PdfParse from "pdf-parse";
 import { resume } from "../services/resume";
 import prisma from "@/libs/db";
 import { resumeContract } from "../services/openAI/resumeContract";
-export const maxDuration = 10; // This function can run for a maximum of 5 seconds
-export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
   try {
@@ -31,7 +29,8 @@ export async function POST(request) {
       return new Response(
         JSON.stringify({
           message: "PDF Resume!",
-          resume: response.choices[0].message.content
+          text: response.choices[0].message.content,
+          name: file.name
         })
       );
     }
