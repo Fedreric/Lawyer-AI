@@ -1,6 +1,5 @@
 // pages/ResultResume.js
 "use client";
-import React, { useEffect } from "react";
 import { back } from "@/helpers/icons";
 import Link from "next/link";
 import useStore from "@/store/useTextarea";

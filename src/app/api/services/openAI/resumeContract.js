@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import LanguageDetect from 'languagedetect'
 const openai = new OpenAI();
+export const runtime = 'edge';
 
 export async function resumeContract(pdf) {
   const lngDetector = new LanguageDetect();

@@ -42,7 +42,10 @@ export default function UploadFile() {
       setResume(resJson);
       // Utiliza router.push para redirigir a la página ResultResume
       router.push("/ResultResume");
-      setResumeList(session.user.userId)
+      if(session){
+        setResumeList(session.user.userId)
+      }
+      setResumeList(id)
     } catch (error) {
       console.error(error);
     }
