@@ -2,6 +2,8 @@ import OpenAI from "openai";
 import LanguageDetect from 'languagedetect'
 const openai = new OpenAI();
 export const runtime = 'edge';
+export const maxDuration = 25; // This function can run for a maximum of 5 seconds
+export const dynamic = 'force-dynamic';
 
 export async function resumeContract(pdf) {
   const lngDetector = new LanguageDetect();
