@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Publicity() {
   return (
-    <section className='h-screen md:w-[40%] flex flex-col bg-custom-color-dark px-8'>
+    <section className='order-1 h-screen md:w-[40%] flex flex-col bg-custom-color-dark px-8'>
       <div className='text-text-custom-color-white mt-24 mb-4 md:mt-28'>
         <h2 className='text-3xl'>
           Welcome{" "}
@@ -25,11 +25,6 @@ export default function Publicity() {
             Log in
           </Link>
         </p>
-        <div className='h-[15em] flex items-end justify-center animate-pulse md:hidden'>
-          <Link href={"#main"}>
-           {arrowDown}
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -1,16 +1,16 @@
 "use client";
-
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation'  // Importa useRouter
+import { useRouter } from "next/navigation"; // Importa useRouter
 import React, { useEffect, useState } from "react";
 import useStore from "@/store/useTextarea";
 import { toast } from "sonner";
+import MobileScrollItem from "./MobileScrollItem";
 
 export default function UploadFile() {
   const [file, setFile] = useState(null);
   const { data: session } = useSession();
   const [id, setId] = useState(0);
-  const router = useRouter();  // Crea una instancia de useRouter
+  const router = useRouter(); // Crea una instancia de useRouter
 
   useEffect(() => {
     if (session) {
@@ -18,34 +18,37 @@ export default function UploadFile() {
     }
   }, [session]);
 
-  const {setResume, setResumeList} = useStore();
+  const { setResume, setResumeList } = useStore();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
     try {
-      const toastId = toast.loading('Create resume...',{duration: 60000});
+      const toastId = toast.loading("Create resume...", { duration: 60000 });
       const data = new FormData();
       data.set("file", file);
       data.append("userId", id);
       const res = await fetch("/api/upload", {
         method: "POST",
-        body: data,
+        body: data
       });
       if (res.ok) {
-        toast.success('Resume complete!', { id: toastId, duration: 2000 });
+        toast.success("Resume complete!", { id: toastId, duration: 2000 });
       } else {
-        toast.error('Error, please try again...', { id: toastId, duration: 2000 })
-        throw new Error('Error, please try again...');
+        toast.error("Error, please try again...", {
+          id: toastId,
+          duration: 2000
+        });
+        throw new Error("Error, please try again...");
       }
       const resJson = await res.json();
       setResume(resJson);
       // Utiliza router.push para redirigir a la página ResultResume
       router.push("/ResultResume");
-      if(session){
-        setResumeList(session.user.userId)
+      if (session) {
+        setResumeList(session.user.userId);
       }
-      setResumeList(id)
+      setResumeList(id);
     } catch (error) {
       console.error(error);
     }
@@ -73,6 +76,7 @@ export default function UploadFile() {
           </button>
         </div>
       </form>
+      <MobileScrollItem />
     </section>
   );
 }
