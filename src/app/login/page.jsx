@@ -10,6 +10,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import CustomInput from "@/app/components/CustomInput";
 import { useEffect } from "react";
+import MobileScrollItem from "../components/MobileScrollItem";
 
 const schema = yup.object().shape({
   email: yup
@@ -125,6 +126,7 @@ const Login = () => {
             </Link>
           </p>
         </div>
+        <MobileScrollItem />
       </div>
     </>
   );

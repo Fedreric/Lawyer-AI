@@ -42,7 +42,7 @@ const Navbar = () => {
               </Link>
             </li>
           <li>
-            <details ref={detailsRef} className='mr-14'>
+            <details ref={detailsRef} className='mr-11'>
               <summary className='hover:text-text-custom-color-Details'>
                 {user}
               </summary>
