@@ -13,10 +13,7 @@ export async function POST(request) {
     const filePath = path.join(process.cwd(), "public", fileName);
 
     await fs.promises.writeFile(filePath, buffer);
-
-    setTimeout(async () => {
-      await fs.promises.unlink(filePath);
-    }, 5000);
+    await fs.promises.unlink(filePath);
 
     return NextResponse.json({ message: "download pdf" }, { status: 200 });
   } catch (error) {
