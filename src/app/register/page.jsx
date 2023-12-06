@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import MobileScrollItem from "../components/MobileScrollItem.jsx";
 
 const schema = yup.object({
   name: yup
@@ -57,26 +58,24 @@ const Register = () => {
         "Content-type": "application/json"
       }
     });
+    const resJson = await res.json()
     if (res.status === 201) {
       toast.success("successfully registered, please login", {
         id: toastId,
         duration: 3000
       });
       router.push("/login");
+    }else{
+      toast.error(resJson.message, {
+        id: toastId,
+        duration: 3000
+      });
     }
   });
 
   return (
     <div className='h-screen flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-bg-custom-color'>
       <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <picture className='lg:hidden'>
-          <Image
-            src={logo}
-            alt='Logo'
-            height={"150"}
-            className='mx-auto animate-spin'
-          />
-        </picture>
         <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-custom-color-dark'>
           Create your account!
         </h2>
@@ -137,6 +136,7 @@ const Register = () => {
           </Link>
         </p>
       </div>
+      <MobileScrollItem />
     </div>
   );
 };
